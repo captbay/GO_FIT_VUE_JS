@@ -1,0 +1,58 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap"); */
+
+@font-face {
+    font-family: 'Minecraft';
+    font-weight: normal;
+    src: url("../font/MinecraftRegular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: 'Minecraft';
+    font-weight: bold;
+    src: url("../font/MinecraftBold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: 'Minecraft';
+    font-style: italic;
+    src: url("../font/MinecraftItalic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: 'Minecraft';
+    font-weight: bold;
+    font-style: italic;
+    src: url("../font/MinecraftBoldItalic.otf") format("opentype");
+}
+
+:root {
+    --bs-font-sans-serif: 'Minecraft';
+}
+
+body, .v-application {
+    font-family: var(--bs-font-sans-serif);
+}
+
+.v-application .text-h1,
+.v-application .text-h2,
+.v-application .text-h3,
+.v-application .text-h4,
+.v-application .text-h5,
+.v-application .text-h6,
+.v-application .text-subtitle-1,
+.v-application .text-subtitle-2,
+.v-application .text-body-1,
+.v-application .text-body-2,
+.v-application .text-caption,
+.v-application .text-overline {
+    font-family: var(--bs-font-sans-serif) !important;
+}
+
+.v-application .text-h1,
+.v-application .text-h2,
+.v-application .text-h3,
+.v-application .text-h4,
+.v-application .text-h5,
+.v-application .text-h6 {
+    font-weight: bold;
+}
