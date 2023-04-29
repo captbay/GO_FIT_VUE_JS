@@ -7,6 +7,10 @@ function importView(path) {
   return () => import(`./components/${path}.vue`);
 }
 
+function importViewAdmin(path) {
+  return () => import(`./components/admin/${path}.vue`);
+}
+
 const router = new VueRouter({
   mode: "history",
   routes: [
@@ -21,12 +25,14 @@ const router = new VueRouter({
           meta: { title: "Home" },
           component: importView("Home"),
         },
+        // admin
         {
           path: "/promocash",
           name: "PromoCash",
           meta: { title: "PromoCash" },
-          component: importView("PromoCash"),
+          component: importViewAdmin("PromoCash"),
         },
+        // semua role bisa akses
         {
           path: "/profil",
           name: "Profil",
