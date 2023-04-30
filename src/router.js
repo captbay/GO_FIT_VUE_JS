@@ -44,6 +44,12 @@ const router = new VueRouter({
           meta: { title: "Pegawai" },
           component: importViewAdmin("Pegawai"),
         },
+        {
+          path: "/instruktur",
+          name: "Instruktur",
+          meta: { title: "Instruktur" },
+          component: importViewAdmin("Instruktur"),
+        },
         // semua role bisa akses
         {
           path: "/profil",
