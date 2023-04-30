@@ -32,6 +32,12 @@ const router = new VueRouter({
           meta: { title: "PromoCash" },
           component: importViewAdmin("PromoCash"),
         },
+        {
+          path: "/promoclass",
+          name: "PromoClass",
+          meta: { title: "PromoClass" },
+          component: importViewAdmin("PromoClass"),
+        },
         // semua role bisa akses
         {
           path: "/profil",
