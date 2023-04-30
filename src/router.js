@@ -61,6 +61,12 @@ const router = new VueRouter({
           meta: { title: "Member" },
           component: importViewKasir("Member"),
         },
+        {
+          path: "/resetPass",
+          name: "ResetPass",
+          meta: { title: "ResetPass" },
+          component: importViewKasir("ResetPass"),
+        },
         // semua role bisa akses
         {
           path: "/profil",

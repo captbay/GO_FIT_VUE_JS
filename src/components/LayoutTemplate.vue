@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="body">
         <!-- side bar Kiri -->
-        <v-navigation-drawer app v-model="drawer" width="16%" max-width="300px" min-width="200px" color="#23252E"
+        <v-navigation-drawer app v-model="drawer" width="18%" max-width="300px" min-width="200px" color="#23252E"
             class="sideNav" hide-overlay>
             <v-list-item>
                 <v-list-item-content>
@@ -124,6 +124,7 @@ export default {
             kasirs: [
                 { title: 'Home', icon: 'mdi-home', to: '/' },
                 { title: 'Member', icon: 'mdi-account-multiple-plus', to: '/member' }, //isi reset pass member
+                { title: 'Reset Password', icon: 'mdi-eye', to: '/resetPass' }, //isi reset pass member
                 { title: 'List Class', icon: 'mdi-list-status', to: '/nantian' },
                 { title: 'List Gym', icon: 'mdi-list-status', to: '/nantian' },
                 { title: 'Aktivasi Member', icon: ' mdi-head-plus', to: '/aktivasi' },
