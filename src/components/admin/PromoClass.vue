@@ -266,6 +266,9 @@ export default {
                 }
             }).then((response) => {
                 console.log(this.response)
+                //reset
+                this.promoTemp = [];
+
                 this.snackbar.show = true;
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';

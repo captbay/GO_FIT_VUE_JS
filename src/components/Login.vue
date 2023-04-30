@@ -95,11 +95,19 @@ export default {
                 .then((response) => {
                     let session_token = response.data.access_token;
                     let role = response.data.role
-                    $cookies.set("SESSION", session_token);
-                    $cookies.set("ROLE", role);
-                    this.$router.push({
-                        name: 'Home',
-                    })
+                    if (role == "member" || role == "instruktur") {
+                        snackbar.show = true;
+                        snackbar.icon = "mdi-alert";
+                        snackbar.message = "tidak memiliki akses ke web";
+                        snackbar.color = "red";
+                    } else {
+                        $cookies.set("SESSION", session_token);
+                        $cookies.set("ROLE", role);
+                        this.$router.push({
+                            name: 'Home',
+                        })
+                    }
+
                 }).catch((error) => {
                     validation.value.username = error.response.data.user;
                     validation.value.password = error.response.data.user;
