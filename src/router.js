@@ -11,6 +11,10 @@ function importViewAdmin(path) {
   return () => import(`./components/admin/${path}.vue`);
 }
 
+function importViewKasir(path) {
+  return () => import(`./components/kasir/${path}.vue`);
+}
+
 const router = new VueRouter({
   mode: "history",
   routes: [
@@ -49,6 +53,13 @@ const router = new VueRouter({
           name: "Instruktur",
           meta: { title: "Instruktur" },
           component: importViewAdmin("Instruktur"),
+        },
+        //kasir
+        {
+          path: "/member",
+          name: "Member",
+          meta: { title: "Member" },
+          component: importViewKasir("Member"),
         },
         // semua role bisa akses
         {

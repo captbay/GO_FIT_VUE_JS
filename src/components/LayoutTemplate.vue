@@ -124,8 +124,8 @@ export default {
             kasirs: [
                 { title: 'Home', icon: 'mdi-home', to: '/' },
                 { title: 'Member', icon: 'mdi-account-multiple-plus', to: '/member' }, //isi reset pass member
-                { title: 'List Class', icon: 'mdi-list-status', to: '/member' },
-                { title: 'List Gym', icon: 'mdi-list-status', to: '/member' },
+                { title: 'List Class', icon: 'mdi-list-status', to: '/nantian' },
+                { title: 'List Gym', icon: 'mdi-list-status', to: '/nantian' },
                 { title: 'Aktivasi Member', icon: ' mdi-head-plus', to: '/aktivasi' },
                 { title: 'Deposit Uang', icon: ' mdi-cash', to: '/depositUang' },
                 { title: 'Deposit Kelas', icon: ' mdi-google-classroom', to: '/depositKelas' },
@@ -134,12 +134,12 @@ export default {
             managers: [
                 { title: 'Home', icon: 'mdi-home', to: '/' }, //
                 { title: 'Class', icon: 'mdi-home', to: '/class' }, //
-                { title: 'Jadwal Umum', icon: 'mdi-calendar', to: '/member' }, //
-                { title: 'Jadwal Harian', icon: 'mdi-calendar-alert', to: '/member' },
-                { title: 'Instruktur', icon: 'mdi-account-tie-hat', to: '/member' },
-                { title: 'Instruktur Presensi', icon: 'mdi-list-status', to: '/member' },
-                { title: 'Instruktur izin', icon: ' mdi-account-tie-voice', to: '/aktivasi' },
-                { title: 'Pegawai', icon: ' mdi-account-multiple', to: '/depositUang' },
+                { title: 'Jadwal Umum', icon: 'mdi-calendar', to: '/jadwalUmum' }, //
+                { title: 'Jadwal Harian', icon: 'mdi-calendar-alert', to: '/jadwalHarian' },
+                { title: 'Instruktur', icon: 'mdi-account-tie-hat', to: '/instruktur' },
+                { title: 'Instruktur Presensi', icon: 'mdi-list-status', to: '/instrukturPresensi' },
+                { title: 'Instruktur izin', icon: ' mdi-account-tie-voice', to: '/instrukturIzin' },
+                { title: 'Pegawai', icon: ' mdi-account-multiple', to: '/pegawai' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
             sb: {
