@@ -78,6 +78,12 @@ const router = new VueRouter({
           meta: { title: "Class" },
           component: importViewMo("Class"),
         },
+        {
+          path: "/jadwalUmum",
+          name: "JadwalUmum",
+          meta: { title: "JadwalUmum" },
+          component: importViewMo("JadwalUmum"),
+        },
         // semua role bisa akses
         {
           path: "/profil",
