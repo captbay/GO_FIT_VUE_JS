@@ -15,6 +15,10 @@ function importViewKasir(path) {
   return () => import(`./components/kasir/${path}.vue`);
 }
 
+function importViewMo(path) {
+  return () => import(`./components/mo/${path}.vue`);
+}
+
 const router = new VueRouter({
   mode: "history",
   routes: [
@@ -66,6 +70,13 @@ const router = new VueRouter({
           name: "ResetPass",
           meta: { title: "ResetPass" },
           component: importViewKasir("ResetPass"),
+        },
+        //mo
+        {
+          path: "/class",
+          name: "Class",
+          meta: { title: "Class" },
+          component: importViewMo("Class"),
         },
         // semua role bisa akses
         {

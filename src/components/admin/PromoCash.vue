@@ -241,7 +241,7 @@ export default {
                     'Authorization': 'Bearer ' + $cookies.get("SESSION")
                 }
             }).then((response) => {
-                console.log(this.response)
+                console.log(response)
                 //reset
                 this.promoTemp = [];
 

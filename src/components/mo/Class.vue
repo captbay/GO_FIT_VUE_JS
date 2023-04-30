@@ -4,7 +4,7 @@
         <v-card>
             <v-list-item style="padding: 16px;">
                 <v-list-item-content>
-                    <v-list-item-title class="headline">Instruktur </v-list-item-title>
+                    <v-list-item-title class="headline">Kelas</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
             <v-card-title>
@@ -15,7 +15,7 @@
             </v-card-title>
         </v-card>
         <v-card>
-            <v-data-table :headers="headers" :items="instruktur" :search="search">
+            <v-data-table :headers="headers" :items="kelas" :search="search">
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn small class="mr-2 blue lighten-3" @click="editItem(item.id, item)">
                         edit
@@ -29,24 +29,12 @@
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headine"> Form Instruktur</span>
+                    <span class="headine"> Form Kelas</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
-                        <v-text-field v-model="instrukturTemp.name" label="Nama" required></v-text-field>
-                        <v-text-field v-model="instrukturTemp.address" label="Alamat" required></v-text-field>
-                        <v-text-field v-model="instrukturTemp.number_phone" label="Nomor Telepon" required></v-text-field>
-                        <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
-                            transition="scale-transition" max-width="290px" min-width="290px">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field label="Tanggal Lahir" readonly v-model="instrukturTemp.born_date" v-on="on"
-                                    v-bind="attrs"></v-text-field>
-                            </template>
-                            <v-date-picker v-model="instrukturTemp.born_date" show-adjacent-months locale="en-in"
-                                @input="fromDateMenu = false"></v-date-picker>
-                        </v-menu>
-                        <v-select v-model="instrukturTemp.gender" :items="gender" label="Gender" name="gender" required>
-                        </v-select>
+                        <v-text-field v-model="kelasTemp.name" label="nama kelas" required></v-text-field>
+                        <v-text-field v-model="kelasTemp.price" label="harga kelas" required></v-text-field>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -61,24 +49,12 @@
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
                 <v-card-title>
-                    <span class="headine"> Form Instruktur</span>
+                    <span class="headine"> Form Kelas</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
-                        <v-text-field v-model="editedItem.name" label="Nama" required></v-text-field>
-                        <v-text-field v-model="editedItem.address" label="Alamat" required></v-text-field>
-                        <v-text-field v-model="editedItem.number_phone" label="Nomor Telepon" required></v-text-field>
-                        <!-- <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
-                            transition="scale-transition" max-width="290px" min-width="290px">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field label="Tanggal Lahir" readonly v-model="editedItem.born_date" v-on="on"
-                                    v-bind="attrs"></v-text-field>
-                            </template>
-                            <v-date-picker v-model="editedItem.born_date" show-adjacent-months locale="en-in"
-                                @input="fromDateMenu = false"></v-date-picker>
-                        </v-menu>
-                        <v-select v-model="editedItem.gender" :items="gender" label="Gender" name="gender" required>
-                        </v-select> -->
+                        <v-text-field v-model="editedItem.name" label="nama kelas" required></v-text-field>
+                        <v-text-field v-model="editedItem.price" label="harga kelas" required></v-text-field>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -125,33 +101,20 @@ export default {
     data() {
         return {
             search: null,
-            instruktur: [],
+            kelas: [],
             editedItem: {
                 name: '',
-                address: '',
-                number_phone: '',
-                born_date: '',
-                gender: '',
+                price: '',
             },
-            //gender
-            gender: [
-                "pria",
-                "wanita",
-            ],
-            instrukturTemp: [],
+            kelasTemp: [],
             title: "",
             headers: [
                 {
-                    text: "Nomor Instruktur",
+                    text: "Nama Kelas",
                     sortable: true,
-                    value: "no_instruktur",
+                    value: "name",
                 },
-                { text: "Nama", value: "name" },
-                { text: "Alamat", value: "address" },
-                { text: "Nomor Telepon", value: "number_phone" },
-                { text: "Tanggal Lahir", value: "born_date" },
-                { text: "Gender", value: "gender" },
-                { text: "Total Late", value: "total_late" },
+                { text: "Harga Kelas", value: "price" },
                 { text: "Actions", value: "actions", sortable: false },
             ],
             //pop up
@@ -168,22 +131,18 @@ export default {
                 icon: '',
                 message: ''
             }),
-
-            //date
-            fromDateMenu: false,
         };
     },
     methods: {
-
-        getPegawai() {
-            axios.get(Api.BASE_URL + "/instruktur", {
+        getKelas() {
+            axios.get(Api.BASE_URL + "/class_detail", {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + $cookies.get("SESSION")
                 }
             }).then((response) => {
-                this.instruktur = response.data.data;
-                console.log(this.instruktur)
+                this.kelas = response.data.data;
+                console.log(this.kelas)
             }).catch((error) => {
                 console.log(error)
             });
@@ -192,12 +151,9 @@ export default {
         //belum selesai
         editItem(id, item) {
             this.editedIndex = id
-            this.indexArray = this.instruktur.indexOf(item)
-            this.editedItem.name = this.instruktur[this.indexArray].name
-            this.editedItem.address = this.instruktur[this.indexArray].address
-            this.editedItem.number_phone = this.instruktur[this.indexArray].number_phone
-            this.editedItem.born_date = this.instruktur[this.indexArray].born_date
-            this.editedItem.gender = this.instruktur[this.indexArray].gender
+            this.indexArray = this.kelas.indexOf(item)
+            this.editedItem.name = this.kelas[this.indexArray].name
+            this.editedItem.price = this.kelas[this.indexArray].price
             console.log(this.editedItem)
             console.log(this.editedIndex)
             this.dialogEdit = true
@@ -206,16 +162,10 @@ export default {
         saveEdit() {
             let id = this.editedIndex;
             let name = this.editedItem.name;
-            let address = this.editedItem.address;
-            let number_phone = this.editedItem.number_phone;
-            // let born_date = this.editedItem.born_date;
-            // let gender = this.editedItem.gender;
-            axios.put(Api.BASE_URL + `/instruktur/${id}`, {
+            let price = this.editedItem.price;
+            axios.put(Api.BASE_URL + `/class_detail/${id}`, {
                 name: name,
-                address: address,
-                number_phone: number_phone,
-                // born_date: born_date,
-                // gender: gender,
+                price: price,
             }, {
                 headers: {
                     'Accept': 'application/json',
@@ -229,7 +179,7 @@ export default {
                 this.snackbar.message = 'Berhasil Edit';
                 this.dialogEdit = false;
                 //reload
-                this.getPegawai();
+                this.getKelas();
             }).catch((error) => {
                 console.log(error)
                 this.snackbar.show = true;
@@ -246,7 +196,7 @@ export default {
 
         deleteItemConfirm() {
             let id = this.editedIndex;
-            axios.delete(Api.BASE_URL + `/instruktur/${id}`, {
+            axios.delete(Api.BASE_URL + `/class_detail/${id}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + $cookies.get("SESSION")
@@ -259,7 +209,7 @@ export default {
                 this.snackbar.message = 'Berhasil hapus';
                 this.dialogDelete = false
                 //reload
-                this.getPegawai();
+                this.getKelas();
             }).catch((error) => {
                 console.log(error)
                 this.snackbar.show = true;
@@ -271,17 +221,11 @@ export default {
         },
 
         saveTambah() {
-            let name = this.instrukturTemp.name;
-            let address = this.instrukturTemp.address;
-            let number_phone = this.instrukturTemp.number_phone;
-            let born_date = this.instrukturTemp.born_date;
-            let gender = this.instrukturTemp.gender;
-            axios.post(Api.BASE_URL + "/instruktur", {
+            let name = this.kelasTemp.name;
+            let price = this.kelasTemp.price;
+            axios.post(Api.BASE_URL + "/class_detail", {
                 name: name,
-                address: address,
-                number_phone: number_phone,
-                born_date: born_date,
-                gender: gender,
+                price: price,
             }, {
                 headers: {
                     'Accept': 'application/json',
@@ -290,7 +234,7 @@ export default {
             }).then((response) => {
                 console.log(response)
                 //reset
-                this.instrukturTemp = [];
+                this.kelasTemp = [];
 
                 this.snackbar.show = true;
                 this.snackbar.color = 'success';
@@ -298,7 +242,7 @@ export default {
                 this.snackbar.message = 'Berhasil tambah';
                 this.dialogTambah = false;
                 //reload
-                this.getPegawai();
+                this.getKelas();
             }).catch((error) => {
                 console.log(error)
                 this.snackbar.show = true;
@@ -310,7 +254,7 @@ export default {
 
     },
     mounted() {
-        this.getPegawai();
+        this.getKelas();
     }
 };
 </script>
