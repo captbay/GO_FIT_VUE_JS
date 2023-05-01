@@ -134,7 +134,7 @@ export default {
             ],
             managers: [
                 { title: 'Home', icon: 'mdi-home', to: '/' }, //
-                { title: 'Class', icon: 'mdi-home', to: '/class' }, //
+                { title: 'Class', icon: 'mdi-google-classroom', to: '/class' }, //
                 { title: 'Jadwal Umum', icon: 'mdi-calendar', to: '/jadwalUmum' }, //
                 { title: 'Jadwal Harian', icon: 'mdi-calendar-alert', to: '/jadwalHarian' },
                 { title: 'Instruktur', icon: 'mdi-account-tie-hat', to: '/instruktur' },
