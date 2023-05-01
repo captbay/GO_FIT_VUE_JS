@@ -39,10 +39,18 @@
                         <v-select v-model="jadwalTemp.id_class_detail" :items="classDetail" label="Class yang Jadwal"
                             name="classDetail" item-value="id" item-text="name" required>
                         </v-select>
-                        <!-- <v-text-field v-model="jadwalTemp.id_instruktur" label="id instruktur" required></v-text-field> -->
-                        <!-- <v-text-field v-model="jadwalTemp.id_class_detail" label="id class detail" required></v-text-field> -->
-                        <v-text-field v-model="jadwalTemp.start_class" label="mulai kelas" required></v-text-field>
-                        <v-text-field v-model="jadwalTemp.day_name" label="nama hari" required></v-text-field>
+                        <v-menu v-model="fromTimeMenu" :close-on-content-click="false" nudge-bottom="64"
+                            transition="scale-transition" max-width="290px" min-width="290px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field label="Mulai Kelas" readonly v-model="jadwalTemp.start_class" v-on="on"
+                                    v-bind="attrs"></v-text-field>
+                            </template>
+                            <v-time-picker v-model="jadwalTemp.start_class" format="24hr"
+                                @input="fromTimeMenu = false"></v-time-picker>
+                        </v-menu>
+                        <v-select v-model="jadwalTemp.day_name" :items="day_name" label="Nama Hari" name="day_name"
+                            item-value="name" item-text="name" required>
+                        </v-select>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -67,10 +75,19 @@
                         <v-select v-model="editedItem.id_class_detail" :items="classDetail" label="Class yang Jadwal"
                             name="classDetail" item-value="id" item-text="name" required>
                         </v-select>
-                        <!-- <v-text-field v-model="editedItem.id_instruktur" label="id instruktur" required></v-text-field> -->
-                        <!-- <v-text-field v-model="editedItem.id_class_detail" label="id class detail" required></v-text-field> -->
-                        <v-text-field v-model="editedItem.start_class" label="mulai kelas" required></v-text-field>
-                        <v-text-field v-model="editedItem.day_name" label="nama hari" required></v-text-field>
+                        <v-menu v-model="fromTimeMenuEdit" :close-on-content-click="false" nudge-bottom="64"
+                            transition="scale-transition" max-width="290px" min-width="290px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-text-field label="Mulai Kelas" readonly v-model="editedItem.start_class" v-on="on"
+                                    v-bind="attrs"></v-text-field>
+                            </template>
+                            <v-time-picker v-model="editedItem.start_class" format="24hr"
+                                @input="fromTimeMenuEdit = false"></v-time-picker>
+                        </v-menu>
+                        <v-text-field v-model="editedItem.capacity" label="Capasitas Kelas" required></v-text-field>
+                        <v-select v-model="editedItem.day_name" :items="day_name" label="Nama Hari" name="day_name"
+                            item-value="name" item-text="name" required>
+                        </v-select>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -124,6 +141,7 @@ export default {
                 id_instruktur: 0,
                 id_class_detail: 0,
                 start_class: '',
+                capacity: 0,
                 day_name: '',
             },
             jadwalTemp: [],
@@ -145,6 +163,16 @@ export default {
             dialogTambah: false,
             dialogEdit: false,
             dialogDelete: false,
+            //day name
+            day_name: [
+                { name: 'Monday' },
+                { name: 'Tuesday' },
+                { name: 'Wednesday' },
+                { name: 'Thursday' },
+                { name: 'Friday' },
+                { name: 'Saturday' },
+                { name: 'Sunday' },
+            ],
 
             //index
             editedIndex: null,
@@ -155,6 +183,10 @@ export default {
                 icon: '',
                 message: ''
             }),
+
+            //date
+            fromTimeMenu: false,
+            fromTimeMenuEdit: false,
         };
     },
     methods: {
@@ -208,6 +240,7 @@ export default {
             this.editedItem.id_instruktur = this.jadwal[this.indexArray].id_instruktur
             this.editedItem.id_class_detail = this.jadwal[this.indexArray].id_class_detail
             this.editedItem.start_class = this.jadwal[this.indexArray].start_class
+            this.editedItem.capacity = this.jadwal[this.indexArray].capacity
             this.editedItem.day_name = this.jadwal[this.indexArray].day_name
             console.log(this.editedItem)
             console.log(this.editedIndex)
@@ -219,11 +252,13 @@ export default {
             let id_instruktur = this.editedItem.id_instruktur;
             let id_class_detail = this.editedItem.id_class_detail;
             let start_class = this.editedItem.start_class;
+            let capacity = this.editedItem.capacity;
             let day_name = this.editedItem.day_name;
             axios.put(Api.BASE_URL + `/jadwal_umum/${id}`, {
                 id_instruktur: id_instruktur,
                 id_class_detail: id_class_detail,
                 start_class: start_class,
+                capacity: capacity,
                 day_name: day_name,
             }, {
                 headers: {
