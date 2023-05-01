@@ -16,6 +16,15 @@
         </v-card>
         <v-card>
             <v-data-table :headers="headers" :items="promo" :search="search">
+                <template v-slot:[`item.min_deposit_cash`]="{ item }">
+                    <v-card-text>Rp. {{ formatPrice(item.min_deposit_cash) }}</v-card-text>
+                </template>
+                <template v-slot:[`item.min_topup_cash`]="{ item }">
+                    <v-card-text>Rp. {{ formatPrice(item.min_topup_cash) }}</v-card-text>
+                </template>
+                <template v-slot:[`item.bonus_cash`]="{ item }">
+                    <v-card-text>Rp. {{ formatPrice(item.bonus_cash) }}</v-card-text>
+                </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn small class="mr-2 blue lighten-3" @click="editItem(item.id, item)">
                         edit
@@ -138,6 +147,11 @@ export default {
         };
     },
     methods: {
+        formatPrice(value) {
+            let val = (value / 1).toFixed(2).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
+
         getPromo() {
             axios.get(Api.BASE_URL + "/promo_cash", {
                 headers: {

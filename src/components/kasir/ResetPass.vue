@@ -86,7 +86,6 @@ export default {
                 { text: "Exp Membership", value: "expired_date_membership" },
                 { text: "Status Membership", value: "status_membership" },
                 { text: "Actions", value: "actions", sortable: false },
-                { text: "Cetak Kartu", value: "cetak", sortable: false },
             ],
             //pop up
             dialogTambah: false,

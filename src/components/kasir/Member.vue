@@ -16,6 +16,9 @@
         </v-card>
         <v-card>
             <v-data-table :headers="headers" :items="member" :search="search">
+                <template v-slot:[`item.jumlah_deposit_reguler`]="{ item }">
+                    <v-card-text>Rp. {{ formatPrice(item.jumlah_deposit_reguler) }}</v-card-text>
+                </template>
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn small class="mr-2 blue lighten-3" @click="editItem(item.id, item)">
                         edit
@@ -181,6 +184,10 @@ export default {
         };
     },
     methods: {
+        formatPrice(value) {
+            let val = (value / 1).toFixed(2).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        },
 
         getPegawai() {
             axios.get(Api.BASE_URL + "/member", {

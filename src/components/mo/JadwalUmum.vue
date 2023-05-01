@@ -16,12 +16,6 @@
         </v-card>
         <v-card>
             <v-data-table :headers="headers" :items="jadwal" :search="search">
-                <!-- <template v-slot:[`item.id_instruktur`]="{ item }">
-                    <v-card-text>{{ item.instruktur.name }}</v-card-text>
-                </template> -->
-                <!-- <template v-slot:[`item.id_class_detail`]="{ item }">
-                    <v-card-text>{{ classDetail[item.id_class_detail] }}</v-card-text>
-                </template> -->
                 <template v-slot:[`item.actions`]="{ item }">
                     <v-btn small class="mr-2 blue lighten-3" @click="editItem(item.id, item)">
                         edit
@@ -136,11 +130,11 @@ export default {
             title: "",
             headers: [
                 {
-                    text: "Id Instruktur",
+                    text: "Nama Instruktur",
                     sortable: true,
-                    value: "id_instruktur",
+                    value: "instruktur.name",
                 },
-                { text: "Id Kelas", value: "id_class_detail" },
+                { text: "Nama Kelas", value: "class_detail.name" },
                 { text: "Mulai Kelas", value: "start_class" },
                 { text: "Selesai Kelas", value: "end_class" },
                 { text: "Kapasitas Kelas", value: "capacity" },
