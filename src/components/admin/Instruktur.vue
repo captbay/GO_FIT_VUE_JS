@@ -28,75 +28,102 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Instruktur</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-text-field v-model="instrukturTemp.name" label="Nama" required></v-text-field>
-                        <v-text-field v-model="instrukturTemp.address" label="Alamat" required></v-text-field>
-                        <v-text-field v-model="instrukturTemp.number_phone" label="Nomor Telepon" required></v-text-field>
-                        <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
-                            transition="scale-transition" max-width="290px" min-width="290px">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field label="Tanggal Lahir" readonly v-model="instrukturTemp.born_date" v-on="on"
-                                    v-bind="attrs"></v-text-field>
-                            </template>
-                            <v-date-picker v-model="instrukturTemp.born_date" show-adjacent-months locale="en-in"
-                                @input="fromDateMenu = false"></v-date-picker>
-                        </v-menu>
-                        <v-select v-model="instrukturTemp.gender" :items="gender" label="Gender" name="gender" required>
-                        </v-select>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogTambah = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveTambah()"> Save</v-btn>
-                </v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                    <v-card-title>
+                        <span class="headine"> Form Instruktur</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="instrukturTemp.name" label="Nama" clearable :rules="[required]"
+                                :error-messages="validation.name"></v-text-field>
+                            <v-text-field v-model="instrukturTemp.address" label="Alamat" clearable :rules="[required]"
+                                :error-messages="validation.address"></v-text-field>
+                            <v-text-field v-model="instrukturTemp.number_phone" label="Nomor Telepon" clearable
+                                :rules="[required]" :error-messages="validation.number_phone"></v-text-field>
+                            <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
+                                transition="scale-transition" max-width="290px" min-width="290px">
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-text-field label="Tanggal Lahir" readonly v-model="instrukturTemp.born_date"
+                                        v-on="on" v-bind="attrs" clearable :rules="[required]"
+                                        :error-messages="validation.born_date"></v-text-field>
+                                </template>
+                                <v-date-picker v-model="instrukturTemp.born_date" show-adjacent-months locale="en-in"
+                                    @input="fromDateMenu = false"></v-date-picker>
+                            </v-menu>
+                            <v-select v-model="instrukturTemp.gender" :items="gender" label="Gender" name="gender" clearable
+                                :rules="[required]" :error-messages="validation.gender">
+                            </v-select>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogTambah = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
 
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Instruktur</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-text-field v-model="editedItem.name" label="Nama" required></v-text-field>
-                        <v-text-field v-model="editedItem.address" label="Alamat" required></v-text-field>
-                        <v-text-field v-model="editedItem.number_phone" label="Nomor Telepon" required></v-text-field>
-                        <!-- <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
-                            transition="scale-transition" max-width="290px" min-width="290px">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field label="Tanggal Lahir" readonly v-model="editedItem.born_date" v-on="on"
-                                    v-bind="attrs"></v-text-field>
-                            </template>
-                            <v-date-picker v-model="editedItem.born_date" show-adjacent-months locale="en-in"
-                                @input="fromDateMenu = false"></v-date-picker>
-                        </v-menu>
-                        <v-select v-model="editedItem.gender" :items="gender" label="Gender" name="gender" required>
-                        </v-select> -->
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogEdit = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveEdit()"> Save</v-btn>
-                </v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                    <v-card-title>
+                        <span class="headine"> Form Instruktur</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="editedItem.name" label="Nama" clearable :rules="[required]"
+                                :error-messages="validation.name"></v-text-field>
+                            <v-text-field v-model="editedItem.address" label="Alamat" clearable :rules="[required]"
+                                :error-messages="validation.address"></v-text-field>
+                            <v-text-field v-model="editedItem.number_phone" label="Nomor Telepon" clearable
+                                :rules="[required]" :error-messages="validation.number_phone"></v-text-field>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogEdit = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
 
         <!-- hapus -->
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog transition="dialog-top-transition" v-model="dialogDelete" max-width="500px">
             <v-card>
-                <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-                <v-card-actions>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to delete this item?</v-card-title>
+                <v-card-actions class="mt-4">
                     <v-spacer></v-spacer>
-                    <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">Cancel</v-btn>
-                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deleteItemConfirm">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure add -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureAdd" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to add?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureAdd = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveTambah()">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure edit -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureEdit" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to edit?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureEdit = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveEdit()">YES</v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -116,14 +143,14 @@
     </v-main>
 </template>
 <script>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import * as Api from "../ApiHelper";
-import { onMounted } from "vue";
 import axios from "axios";
 
 export default {
     data() {
         return {
+            form: false,
             search: null,
             instruktur: [],
             editedItem: {
@@ -158,6 +185,8 @@ export default {
             dialogTambah: false,
             dialogEdit: false,
             dialogDelete: false,
+            dialogAreUSureAdd: false,
+            dialogAreUSureEdit: false,
 
             //index
             editedIndex: null,
@@ -171,9 +200,17 @@ export default {
 
             //date
             fromDateMenu: false,
+
+            //validation
+            validation: [],
         };
     },
     methods: {
+        //tambahin ini disetiap input biar dicek
+        // clearable :rules="[required]"
+        required(v) {
+            return !!v || 'Field is required'
+        },
 
         getPegawai() {
             axios.get(Api.BASE_URL + "/instruktur", {
@@ -227,15 +264,24 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil Edit';
+                //
                 this.dialogEdit = false;
+                this.dialogAreUSureEdit = false
                 //reload
                 this.getPegawai();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                this.dialogAreUSureEdit = false
+
+                this.validation.name = error.response.data.name
+                this.validation.address = error.response.data.address
+                this.validation.number_phone = error.response.data.number_phone
+
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data;
             });
         },
 
@@ -257,9 +303,11 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil hapus';
+                //
                 this.dialogDelete = false
                 //reload
                 this.getPegawai();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
                 this.snackbar.show = true;
@@ -296,15 +344,26 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil tambah';
+                ///
                 this.dialogTambah = false;
+                this.dialogAreUSureAdd = false
                 //reload
                 this.getPegawai();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                this.dialogAreUSureAdd = false
+
+                this.validation.name = error.response.data.name
+                this.validation.address = error.response.data.address
+                this.validation.number_phone = error.response.data.number_phone
+                this.validation.born_date = error.response.data.born_date
+                this.validation.gender = error.response.data.gender
+
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data;
             });
         }
 

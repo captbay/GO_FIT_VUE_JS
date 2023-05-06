@@ -6,7 +6,7 @@
                     <v-card elevation="3" class="mx-auto" rounded align-center justify-center :loading="loading"
                         :disabled="loading">
 
-                        <v-form @submit.prevent="Login()">
+                        <v-form @submit.prevent="Login()" v-model="form">
                             <v-card-title class="text-h6 text-center d-block pb-8 pt-8">
                                 <v-img :src="require('@/assets/Logo.png')" contain max-height="100"
                                     style="-webkit-filter: drop-shadow( 2px 2px 2px #FFF);"></v-img>
@@ -16,22 +16,20 @@
 
                             <v-divider></v-divider>
                             <v-card-text class="text-center pb-0">
-                                <!-- <v-form> -->
                                 <v-text-field v-model="user.username" label="Username" type="text"
-                                    prepend-inner-icon="mdi-account" color="blue" outlined
-                                    :error-messages="validation.username" :loading="loading"
-                                    :disabled="loading"></v-text-field>
+                                    prepend-inner-icon="mdi-account" color="blue" outlined :loading="loading"
+                                    :disabled="loading" clearable :rules="[required]">
+                                </v-text-field>
                                 <v-text-field v-model="user.password" label="Password" prepend-inner-icon="mdi-lock"
-                                    color="blue" outlined :error-messages="validation.password"
-                                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                    color="blue" outlined :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                                     :type="showPassword ? 'text' : 'password'" @click:append="showPassword = !showPassword"
-                                    :loading="loading" :disabled="loading"></v-text-field>
-                                <!-- </v-form> -->
+                                    :loading="loading" :disabled="loading" clearable :rules="[required]"></v-text-field>
                             </v-card-text>
                             <v-card-actions>
                                 <!-- <v-row align="center" justify="end"> -->
                                 <!-- <v-spacer></v-spacer> -->
-                                <v-btn width="100%" color="orange" class="d-block" type="submit">Login</v-btn>
+                                <v-btn width="100%" color="orange" class="d-block" type="submit"
+                                    :disabled="!form">Login</v-btn>
                                 <!-- <v-spacer></v-spacer> -->
                                 <!-- </v-row> -->
                             </v-card-actions>
@@ -60,14 +58,7 @@ import * as Api from "./ApiHelper";
 import axios from "axios";
 export default {
     setup() {
-        const slides = [
-            'https://neilpatel.com/wp-content/uploads/2014/06/social-media-sites-blog.jpg',
-            'https://www.ebu.ch/files/live/sites/ebu/files/Events/Media/Digital%20Media%20Days%202020/Digital%20Media%20Days%202020%20-%20Online%20edition/social-media_resize_md.jpg',
-            'https://images.indianexpress.com/2022/05/social-media-crop.jpg',
-            'https://phlearn.com/wp-content/uploads/2019/02/social-media-planning-header.jpg?fit=1600%2C1104&quality=99&strip=all',
-            'https://www.managementsite.nl/resized/2011/03/Social-media.jpg_2000x2000_nocrop.webp',
-        ]
-
+        const form = false;
         const user = reactive({
             username: "",
             password: "",
@@ -83,8 +74,6 @@ export default {
         const loading = ref(false);
 
         const showPassword = ref(false);
-        //state validation
-        const validation = ref([]);
 
         function Login() {
             loading.value = true;
@@ -109,8 +98,6 @@ export default {
                     }
 
                 }).catch((error) => {
-                    validation.value.username = error.response.data.user;
-                    validation.value.password = error.response.data.user;
                     snackbar.show = true;
                     snackbar.icon = "mdi-alert";
                     snackbar.message = error.response.data.message;
@@ -120,15 +107,19 @@ export default {
                 });
         }
 
+        function required(v) {
+            return !!v || 'Field is required'
+        }
+
 
         return {
+            form,
             showPassword,
-            slides,
             user,
-            validation,
             Login,
             snackbar,
-            loading
+            loading,
+            required,
         }
 
     }

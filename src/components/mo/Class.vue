@@ -31,51 +31,85 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Kelas</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-text-field v-model="kelasTemp.name" label="nama kelas" required></v-text-field>
-                        <v-text-field v-model="kelasTemp.price" label="harga kelas" required></v-text-field>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogTambah = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveTambah()"> Save</v-btn>
-                </v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                    <v-card-title>
+                        <span class="headine"> Form Kelas</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="kelasTemp.name" label="nama kelas" clearable :rules="[required]"
+                                :error-messages="validation.name"></v-text-field>
+                            <v-text-field v-model="kelasTemp.price" label="harga kelas" clearable :rules="[required]"
+                                :error-messages="validation.price"></v-text-field>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogTambah = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
 
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Kelas</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-text-field v-model="editedItem.name" label="nama kelas" required></v-text-field>
-                        <v-text-field v-model="editedItem.price" label="harga kelas" required></v-text-field>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogEdit = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveEdit()"> Save</v-btn>
-                </v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                    <v-card-title>
+                        <span class="headine"> Form Kelas</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="editedItem.name" label="nama kelas" clearable :rules="[required]"
+                                :error-messages="validation.name"></v-text-field>
+                            <v-text-field v-model="editedItem.price" label="harga kelas" clearable :rules="[required]"
+                                :error-messages="validation.price"></v-text-field>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogEdit = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
 
         <!-- hapus -->
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog transition="dialog-top-transition" v-model="dialogDelete" max-width="500px">
             <v-card>
-                <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-                <v-card-actions>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to delete this item?</v-card-title>
+                <v-card-actions class="mt-4">
                     <v-spacer></v-spacer>
-                    <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">Cancel</v-btn>
-                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deleteItemConfirm">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure add -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureAdd" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to add?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureAdd = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveTambah()">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure edit -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureEdit" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to edit?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureEdit = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveEdit()">YES</v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -95,9 +129,8 @@
     </v-main>
 </template>
 <script>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import * as Api from "../ApiHelper";
-import { onMounted } from "vue";
 import axios from "axios";
 
 export default {
@@ -124,6 +157,8 @@ export default {
             dialogTambah: false,
             dialogEdit: false,
             dialogDelete: false,
+            dialogAreUSureAdd: false,
+            dialogAreUSureEdit: false,
 
             //index
             editedIndex: null,
@@ -134,9 +169,18 @@ export default {
                 icon: '',
                 message: ''
             }),
+
+            //validation
+            validation: [],
         };
     },
     methods: {
+        //tambahin ini disetiap input biar dicek
+        // clearable :rules="[required]"
+        required(v) {
+            return !!v || 'Field is required'
+        },
+
         formatPrice(value) {
             let val = (value / 1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -185,15 +229,23 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil Edit';
+                //
                 this.dialogEdit = false;
+                this.dialogAreUSureEdit = false
                 //reload
                 this.getKelas();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                this.dialogAreUSureEdit = false
+
+                this.validation.name = error.response.data.name;
+                this.validation.price = error.response.data.price;
+
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data.message;
             });
         },
 
@@ -215,9 +267,11 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil hapus';
+                //
                 this.dialogDelete = false
                 //reload
                 this.getKelas();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
                 this.snackbar.show = true;
@@ -248,15 +302,22 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil tambah';
+                ///
                 this.dialogTambah = false;
+                this.dialogAreUSureAdd = false
                 //reload
                 this.getKelas();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                this.dialogAreUSureAdd = false
+
+                this.validation.name = error.response.data.name;
+                this.validation.price = error.response.data.price;
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data.message;
             });
         }
 

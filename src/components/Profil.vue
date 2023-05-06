@@ -3,7 +3,7 @@
         <v-container>
             <v-card class="mx-auto" max-width="auto" :loading="loadingProfile" :disabled="loadingProfile">
                 <v-card-text>
-                    <v-list-item>
+                    <v-list-item class="d-flex flex-column mb-6 bg-surface-variant">
                         <v-list-item-avatar class="mt-1" size="240">
                             <v-img :src="'https://cdn.vuetifyjs.com/images/john.jpg'" alt="Foto profil">
                             </v-img>
@@ -22,18 +22,12 @@
                             <v-list-item-title class="format">Akun Dibuat: {{ Api.getDateTimeID(User.created_at, 'month')
                             }}</v-list-item-title>
                         </v-list-item-content>
-                        <div class="" style="padding: 16px;">
-                            <v-btn color="success" class="editUser" depressed @click="UpdateUser"
-                                style="margin-bottom: 200px; ">
-                                Edit Profil <v-icon right> mdi-account-edit</v-icon>
-                            </v-btn>
-                        </div>
-                        <div>
-                            <v-btn color="success" class="editUserPass" depressed @click="UpdateUserPass"
-                                style="margin-bottom: 200px; ">
-                                Edit Password <v-icon right> mdi-account-edit</v-icon>
-                            </v-btn>
-                        </div>
+                        <v-btn color="success" class="editUser" depressed @click="UpdateUser" style="margin: 16px;">
+                            Edit Profil <v-icon right> mdi-account-edit</v-icon>
+                        </v-btn>
+                        <v-btn color="success" class="editUserPass" depressed @click="UpdateUserPass" style="margin: 16px;">
+                            Edit Password <v-icon right> mdi-account-edit</v-icon>
+                        </v-btn>
                     </v-list-item>
                 </v-card-text>
             </v-card>

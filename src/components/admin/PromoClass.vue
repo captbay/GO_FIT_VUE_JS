@@ -28,62 +28,89 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Promo Class</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <!-- <v-select v-model="promoTemp.id_class_detail" :items="classDetail" label="Class yang Promo"
-                            name="classDetail" item-value="id" item-text="name" required>
-                        </v-select> -->
-                        <v-text-field v-model="promoTemp.jumlah_sesi" label="Jumlah Kelas Minimal Dipesan"
-                            required></v-text-field>
-                        <v-text-field v-model="promoTemp.bonus_sesi" label="Bonus Kelas yang diberikan"
-                            required></v-text-field>
-                        <v-text-field v-model="promoTemp.durasi_aktif" label="Durasi Aktif Paket (bulan)"
-                            required></v-text-field>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogTambah = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveTambah()"> Save</v-btn>
-                </v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                    <v-card-title>
+                        <span class="headine"> Form Promo Class</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="promoTemp.jumlah_sesi" label="Jumlah Kelas Minimal Dipesan" clearable
+                                :rules="[required]" :error-messages="validation.jumlah_sesi"></v-text-field>
+                            <v-text-field v-model="promoTemp.bonus_sesi" label="Bonus Kelas yang diberikan" clearable
+                                :rules="[required]" :error-messages="validation.bonus_sesi"></v-text-field>
+                            <v-text-field v-model="promoTemp.durasi_aktif" label="Durasi Aktif Paket (bulan)" clearable
+                                :rules="[required]" :error-messages="validation.durasi_aktif"></v-text-field>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogTambah = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
 
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Promo Class</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-text-field v-model="editedItem.jumlah_sesi" label="Jumlah Kelas Minimal Dipesan"
-                            required></v-text-field>
-                        <v-text-field v-model="editedItem.bonus_sesi" label="Bonus Kelas yang diberikan"
-                            required></v-text-field>
-                        <v-text-field v-model="editedItem.durasi_aktif" label="Durasi Aktif Paket (bulan)"
-                            required></v-text-field>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogEdit = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveEdit()"> Save</v-btn>
-                </v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                    <v-card-title>
+                        <span class="headine"> Form Promo Class</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="editedItem.jumlah_sesi" label="Jumlah Kelas Minimal Dipesan" clearable
+                                :rules="[required]" :error-messages="validation.jumlah_sesi"></v-text-field>
+                            <v-text-field v-model="editedItem.bonus_sesi" label="Bonus Kelas yang diberikan" clearable
+                                :rules="[required]"></v-text-field>
+                            <v-text-field v-model="editedItem.durasi_aktif" label="Durasi Aktif Paket (bulan)" clearable
+                                :rules="[required]"></v-text-field>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogEdit = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
 
         <!-- hapus -->
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog transition="dialog-top-transition" v-model="dialogDelete" max-width="500px">
             <v-card>
-                <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-                <v-card-actions>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to delete this item?</v-card-title>
+                <v-card-actions class="mt-4">
                     <v-spacer></v-spacer>
-                    <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">Cancel</v-btn>
-                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deleteItemConfirm">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure add -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureAdd" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to add?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureAdd = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveTambah()">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure edit -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureEdit" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to edit?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureEdit = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveEdit()">YES</v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -103,9 +130,8 @@
     </v-main>
 </template>
 <script>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import * as Api from "../ApiHelper";
-import { onMounted } from "vue";
 import axios from "axios";
 
 export default {
@@ -135,6 +161,8 @@ export default {
             dialogTambah: false,
             dialogEdit: false,
             dialogDelete: false,
+            dialogAreUSureAdd: false,
+            dialogAreUSureEdit: false,
 
             //index
             editedIndex: null,
@@ -145,22 +173,17 @@ export default {
                 icon: '',
                 message: ''
             }),
+
+            //validation
+            validation: [],
         };
     },
     methods: {
-        // getClassDetail() {
-        //     axios.get(Api.BASE_URL + "/class_detail", {
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Authorization': 'Bearer ' + $cookies.get("SESSION")
-        //         }
-        //     }).then((response) => {
-        //         this.classDetail = response.data.data;
-        //         console.log(this.classDetail)
-        //     }).catch((error) => {
-        //         console.log(error)
-        //     });
-        // },
+        //tambahin ini disetiap input biar dicek
+        // clearable :rules="[required]"
+        required(v) {
+            return !!v || 'Field is required'
+        },
 
         getPromo() {
             axios.get(Api.BASE_URL + "/promo_class", {
@@ -208,15 +231,24 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil Edit';
+                //
                 this.dialogEdit = false;
+                this.dialogAreUSureEdit = false
                 //reload
                 this.getPromo();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                this.dialogAreUSureEdit = false
+
+                this.validation.jumlah_sesi = error.response.data.jumlah_sesi
+                this.validation.bonus_sesi = error.response.data.bonus_sesi
+                this.validation.durasi_aktif = error.response.data.durasi_aktif
+
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data.message;
             });
         },
 
@@ -238,9 +270,11 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil hapus';
+                //
                 this.dialogDelete = false
                 //reload
                 this.getPromo();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
                 this.snackbar.show = true;
@@ -273,15 +307,23 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil tambah';
+                ///
                 this.dialogTambah = false;
+                this.dialogAreUSureAdd = false
                 //reload
                 this.getPromo();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+
+                this.validation.jumlah_sesi = error.response.data.jumlah_sesi
+                this.validation.bonus_sesi = error.response.data.bonus_sesi
+                this.validation.durasi_aktif = error.response.data.durasi_aktif
+
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data.message;
             });
         }
 

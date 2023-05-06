@@ -27,18 +27,34 @@
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-card-title>
-                    <span class="headine"> Form Reset Password Member</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-text-field v-model="memberTemp.passwordNew" label="password" required></v-text-field>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
+                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                    <v-card-title>
+                        <span class="headine"> Form Reset Password Member</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-text-field v-model="memberTemp.passwordNew" label="password" clearable :rules="[required]"
+                                :error-messages="validation.passwordNew"></v-text-field>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="red lighten-3" text @click="dialogEdit = false"> CANCEL</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+        </v-dialog>
+
+        <!-- are you sure edit -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureEdit" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to edit?</v-card-title>
+                <v-card-actions class="mt-4">
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogEdit = false"> Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveEdit()"> Save</v-btn>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureEdit = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveEdit()">YES</v-btn>
+                    <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -56,9 +72,8 @@
     </v-main>
 </template>
 <script>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import * as Api from "../ApiHelper";
-import { onMounted } from "vue";
 import axios from "axios";
 
 export default {
@@ -90,6 +105,8 @@ export default {
             //pop up
             dialogTambah: false,
             dialogEdit: false,
+            dialogAreUSureAdd: false,
+            dialogAreUSureEdit: false,
 
             //index
             editedIndex: null,
@@ -100,9 +117,17 @@ export default {
                 icon: '',
                 message: ''
             }),
+
+            //validation
+            validation: [],
         };
     },
     methods: {
+        //tambahin ini disetiap input biar dicek
+        // clearable :rules="[required]"
+        required(v) {
+            return !!v || 'Field is required'
+        },
 
         getPegawai() {
             axios.get(Api.BASE_URL + "/member", {
@@ -144,15 +169,23 @@ export default {
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
                 this.snackbar.message = 'Berhasil ubah password';
+                //
                 this.dialogEdit = false;
+                this.dialogAreUSureEdit = false
                 //reload
                 this.getPegawai();
+                this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                this.dialogAreUSureEdit = false
+
+                this.validation.username = error.response.data.username
+                this.validation.passwordNew = error.response.data.passwordNew
+
+                // this.snackbar.show = true;
+                // this.snackbar.color = 'error';
+                // this.snackbar.icon = 'mdi-close';
+                // this.snackbar.message = error.response.data.message;
             });
         },
 
