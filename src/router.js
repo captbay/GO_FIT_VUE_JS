@@ -104,6 +104,33 @@ const router = new VueRouter({
           },
           component: importViewKasir("ResetPass"),
         },
+        {
+          path: "/aktivasiMember",
+          name: "AktivasiMember",
+          meta: {
+            title: "AktivasiMember",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("AktivasiMember"),
+        },
+        {
+          path: "/depositUang",
+          name: "DepositUang",
+          meta: {
+            title: "DepositUang",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("DepositUang"),
+        },
+        {
+          path: "/depositKelas",
+          name: "DepositKelas",
+          meta: {
+            title: "DepositKelas",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("DepositKelas"),
+        },
         //mo
         {
           path: "/class",
@@ -122,6 +149,24 @@ const router = new VueRouter({
             authRequired: "mo",
           },
           component: importViewMo("JadwalUmum"),
+        },
+        {
+          path: "/jadwalHarian",
+          name: "JadwalHarian",
+          meta: {
+            title: "JadwalHarian",
+            authRequired: "mo",
+          },
+          component: importViewMo("JadwalHarian"),
+        },
+        {
+          path: "/instrukturIzin",
+          name: "InstrukturIzin",
+          meta: {
+            title: "InstrukturIzin",
+            authRequired: "mo",
+          },
+          component: importViewMo("InstrukturIzin"),
         },
       ],
     },

@@ -28,18 +28,18 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                <v-form @submit.prevent="dialogAreUSureAdd = true">
                     <v-card-title>
                         <span class="headine"> Form Promo Class</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-text-field v-model="promoTemp.jumlah_sesi" label="Jumlah Kelas Minimal Dipesan" clearable
-                                :rules="[required]" :error-messages="validation.jumlah_sesi"></v-text-field>
+                                :error-messages="validation.jumlah_sesi"></v-text-field>
                             <v-text-field v-model="promoTemp.bonus_sesi" label="Bonus Kelas yang diberikan" clearable
-                                :rules="[required]" :error-messages="validation.bonus_sesi"></v-text-field>
+                                :error-messages="validation.bonus_sesi"></v-text-field>
                             <v-text-field v-model="promoTemp.durasi_aktif" label="Durasi Aktif Paket (bulan)" clearable
-                                :rules="[required]" :error-messages="validation.durasi_aktif"></v-text-field>
+                                :error-messages="validation.durasi_aktif"></v-text-field>
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
@@ -54,18 +54,18 @@
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                <v-form @submit.prevent="dialogAreUSureEdit = true">
                     <v-card-title>
                         <span class="headine"> Form Promo Class</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-text-field v-model="editedItem.jumlah_sesi" label="Jumlah Kelas Minimal Dipesan" clearable
-                                :rules="[required]" :error-messages="validation.jumlah_sesi"></v-text-field>
-                            <v-text-field v-model="editedItem.bonus_sesi" label="Bonus Kelas yang diberikan" clearable
-                                :rules="[required]"></v-text-field>
-                            <v-text-field v-model="editedItem.durasi_aktif" label="Durasi Aktif Paket (bulan)" clearable
-                                :rules="[required]"></v-text-field>
+                                :error-messages="validation.jumlah_sesi"></v-text-field>
+                            <v-text-field v-model="editedItem.bonus_sesi" label="Bonus Kelas yang diberikan"
+                                clearable></v-text-field>
+                            <v-text-field v-model="editedItem.durasi_aktif" label="Durasi Aktif Paket (bulan)"
+                                clearable></v-text-field>
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
@@ -179,11 +179,7 @@ export default {
         };
     },
     methods: {
-        //tambahin ini disetiap input biar dicek
-        // clearable :rules="[required]"
-        required(v) {
-            return !!v || 'Field is required'
-        },
+
 
         getPromo() {
             axios.get(Api.BASE_URL + "/promo_class", {

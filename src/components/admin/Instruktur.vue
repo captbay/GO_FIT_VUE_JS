@@ -28,30 +28,30 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                <v-form @submit.prevent="dialogAreUSureAdd = true">
                     <v-card-title>
                         <span class="headine"> Form Instruktur</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            <v-text-field v-model="instrukturTemp.name" label="Nama" clearable :rules="[required]"
+                            <v-text-field v-model="instrukturTemp.name" label="Nama" clearable
                                 :error-messages="validation.name"></v-text-field>
-                            <v-text-field v-model="instrukturTemp.address" label="Alamat" clearable :rules="[required]"
+                            <v-text-field v-model="instrukturTemp.address" label="Alamat" clearable
                                 :error-messages="validation.address"></v-text-field>
                             <v-text-field v-model="instrukturTemp.number_phone" label="Nomor Telepon" clearable
-                                :rules="[required]" :error-messages="validation.number_phone"></v-text-field>
+                                :error-messages="validation.number_phone"></v-text-field>
                             <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
                                 transition="scale-transition" max-width="290px" min-width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field label="Tanggal Lahir" readonly v-model="instrukturTemp.born_date"
-                                        v-on="on" v-bind="attrs" clearable :rules="[required]"
+                                        v-on="on" v-bind="attrs" clearable
                                         :error-messages="validation.born_date"></v-text-field>
                                 </template>
                                 <v-date-picker v-model="instrukturTemp.born_date" show-adjacent-months locale="en-in"
                                     @input="fromDateMenu = false"></v-date-picker>
                             </v-menu>
                             <v-select v-model="instrukturTemp.gender" :items="gender" label="Gender" name="gender" clearable
-                                :rules="[required]" :error-messages="validation.gender">
+                                :error-messages="validation.gender">
                             </v-select>
                         </v-container>
                     </v-card-text>
@@ -67,18 +67,18 @@
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                <v-form @submit.prevent="dialogAreUSureEdit = true">
                     <v-card-title>
                         <span class="headine"> Form Instruktur</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            <v-text-field v-model="editedItem.name" label="Nama" clearable :rules="[required]"
+                            <v-text-field v-model="editedItem.name" label="Nama" clearable
                                 :error-messages="validation.name"></v-text-field>
-                            <v-text-field v-model="editedItem.address" label="Alamat" clearable :rules="[required]"
+                            <v-text-field v-model="editedItem.address" label="Alamat" clearable
                                 :error-messages="validation.address"></v-text-field>
                             <v-text-field v-model="editedItem.number_phone" label="Nomor Telepon" clearable
-                                :rules="[required]" :error-messages="validation.number_phone"></v-text-field>
+                                :error-messages="validation.number_phone"></v-text-field>
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
@@ -150,7 +150,6 @@ import axios from "axios";
 export default {
     data() {
         return {
-            form: false,
             search: null,
             instruktur: [],
             editedItem: {
@@ -206,13 +205,8 @@ export default {
         };
     },
     methods: {
-        //tambahin ini disetiap input biar dicek
-        // clearable :rules="[required]"
-        required(v) {
-            return !!v || 'Field is required'
-        },
 
-        getPegawai() {
+        getInstruktur() {
             axios.get(Api.BASE_URL + "/instruktur", {
                 headers: {
                     'Accept': 'application/json',
@@ -268,7 +262,7 @@ export default {
                 this.dialogEdit = false;
                 this.dialogAreUSureEdit = false
                 //reload
-                this.getPegawai();
+                this.getInstruktur();
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
@@ -306,7 +300,7 @@ export default {
                 //
                 this.dialogDelete = false
                 //reload
-                this.getPegawai();
+                this.getInstruktur();
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
@@ -348,7 +342,7 @@ export default {
                 this.dialogTambah = false;
                 this.dialogAreUSureAdd = false
                 //reload
-                this.getPegawai();
+                this.getInstruktur();
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
@@ -369,7 +363,7 @@ export default {
 
     },
     mounted() {
-        this.getPegawai();
+        this.getInstruktur();
     }
 };
 </script>

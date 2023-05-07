@@ -1,6 +1,6 @@
 // const IP_ADDR = '10.53.4.164'
 const BASE_NONAPI = `http://127.0.0.1:8000`;
-const BASE_THIS = `https://Gofit_Ages.netlify.app`;
+const BASE_THIS = `https://gofit_ages.netlify.app`;
 const BASE_URL = BASE_NONAPI + "/api";
 
 function getHTMLTimestamp(timestamp) {

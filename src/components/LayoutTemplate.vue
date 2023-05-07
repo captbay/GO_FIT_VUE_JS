@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="body">
         <!-- side bar Kiri -->
-        <v-navigation-drawer app v-model="drawer" width="18%" max-width="300px" min-width="200px" color="#23252E"
+        <v-navigation-drawer app v-model="drawer" width="20%" max-width="300px" min-width="200px" color="#23252E"
             class="sideNav" hide-overlay>
             <v-list-item>
                 <v-list-item-content>
@@ -125,11 +125,11 @@ export default {
                 { title: 'Home', icon: 'mdi-home', to: '/' },
                 { title: 'Member', icon: 'mdi-account-multiple-plus', to: '/member' }, //isi reset pass member
                 { title: 'Reset Password', icon: 'mdi-eye', to: '/resetPass' }, //isi reset pass member
-                { title: 'List Class', icon: 'mdi-list-status', to: '/nantian' },
-                { title: 'List Gym', icon: 'mdi-list-status', to: '/nantian' },
-                { title: 'Aktivasi Member', icon: ' mdi-head-plus', to: '/aktivasi' },
+                { title: 'Aktivasi Member', icon: ' mdi-head-plus', to: '/aktivasiMember' },
                 { title: 'Deposit Uang', icon: ' mdi-cash', to: '/depositUang' },
                 { title: 'Deposit Kelas', icon: ' mdi-google-classroom', to: '/depositKelas' },
+                { title: 'List Class', icon: 'mdi-list-status', to: '/nantian' },
+                { title: 'List Gym', icon: 'mdi-list-status', to: '/nantian' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
             managers: [
@@ -137,9 +137,7 @@ export default {
                 { title: 'Class', icon: 'mdi-google-classroom', to: '/class' }, //
                 { title: 'Jadwal Umum', icon: 'mdi-calendar', to: '/jadwalUmum' }, //
                 { title: 'Jadwal Harian', icon: 'mdi-calendar-alert', to: '/jadwalHarian' },
-                { title: 'Instruktur', icon: 'mdi-account-tie-hat', to: '/instruktur' },
-                { title: 'Instruktur Presensi', icon: 'mdi-list-status', to: '/instrukturPresensi' },
-                { title: 'Instruktur izin', icon: ' mdi-account-tie-voice', to: '/instrukturIzin' },
+                { title: 'Ijin Instruktur', icon: ' mdi-account-tie-voice', to: '/instrukturIzin' },
                 { title: 'Pegawai', icon: ' mdi-account-multiple', to: '/pegawai' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],

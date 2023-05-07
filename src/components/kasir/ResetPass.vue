@@ -27,13 +27,13 @@
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                <v-form @submit.prevent="dialogAreUSureEdit = true">
                     <v-card-title>
                         <span class="headine"> Form Reset Password Member</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            <v-text-field v-model="memberTemp.passwordNew" label="password" clearable :rules="[required]"
+                            <v-text-field v-model="memberTemp.passwordNew" label="password" clearable
                                 :error-messages="validation.passwordNew"></v-text-field>
                         </v-container>
                     </v-card-text>
@@ -123,13 +123,9 @@ export default {
         };
     },
     methods: {
-        //tambahin ini disetiap input biar dicek
-        // clearable :rules="[required]"
-        required(v) {
-            return !!v || 'Field is required'
-        },
 
-        getPegawai() {
+
+        getMember() {
             axios.get(Api.BASE_URL + "/member", {
                 headers: {
                     'Accept': 'application/json',
@@ -173,7 +169,7 @@ export default {
                 this.dialogEdit = false;
                 this.dialogAreUSureEdit = false
                 //reload
-                this.getPegawai();
+                this.getMember();
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
@@ -191,7 +187,7 @@ export default {
 
     },
     mounted() {
-        this.getPegawai();
+        this.getMember();
     }
 };
 </script>

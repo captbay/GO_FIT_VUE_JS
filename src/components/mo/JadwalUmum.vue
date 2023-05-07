@@ -28,33 +28,31 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                <v-form @submit.prevent="dialogAreUSureAdd = true">
                     <v-card-title>
                         <span class="headine"> Form Jadwal Umum</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-select v-model="jadwalTemp.id_instruktur" :items="instruktur" label="Instruktur Mengajar"
-                                name="instruktur" item-value="id" item-text="name" clearable :rules="[required]"
+                                name="instruktur" item-value="id" item-text="name" clearable
                                 :error-messages="validation.id_instruktur">
                             </v-select>
                             <v-select v-model="jadwalTemp.id_class_detail" :items="classDetail" label="Class yang Jadwal"
-                                name="classDetail" item-value="id" item-text="name" clearable :rules="[required]"
+                                name="classDetail" item-value="id" item-text="name" clearable
                                 :error-messages="validation.id_class_detail">
                             </v-select>
                             <v-menu v-model="fromTimeMenu" :close-on-content-click="false" nudge-bottom="64"
                                 transition="scale-transition" max-width="290px" min-width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field label="Mulai Kelas" readonly v-model="jadwalTemp.start_class" v-on="on"
-                                        v-bind="attrs" clearable :rules="[required]"
-                                        :error-messages="validation.start_class"></v-text-field>
+                                        v-bind="attrs" clearable :error-messages="validation.start_class"></v-text-field>
                                 </template>
                                 <v-time-picker v-model="jadwalTemp.start_class" format="24hr"
                                     @input="fromTimeMenu = false"></v-time-picker>
                             </v-menu>
                             <v-select v-model="jadwalTemp.day_name" :items="day_name" label="Nama Hari" name="day_name"
-                                item-value="name" item-text="name" clearable :rules="[required]"
-                                :error-messages="validation.day_name">
+                                item-value="name" item-text="name" clearable :error-messages="validation.day_name">
                             </v-select>
                         </v-container>
                     </v-card-text>
@@ -70,35 +68,33 @@
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                <v-form @submit.prevent="dialogAreUSureEdit = true">
                     <v-card-title>
                         <span class="headine"> Form Jadwal Umum</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-select v-model="editedItem.id_instruktur" :items="instruktur" label="Instruktur Mengajar"
-                                name="instruktur" item-value="id" item-text="name" clearable :rules="[required]"
+                                name="instruktur" item-value="id" item-text="name" clearable
                                 :error-messages="validation.id_instruktur">
                             </v-select>
                             <v-select v-model="editedItem.id_class_detail" :items="classDetail" label="Class yang Jadwal"
-                                name="classDetail" item-value="id" item-text="name" clearable :rules="[required]"
+                                name="classDetail" item-value="id" item-text="name" clearable
                                 :error-messages="validation.id_class_detail">
                             </v-select>
                             <v-menu v-model="fromTimeMenuEdit" :close-on-content-click="false" nudge-bottom="64"
                                 transition="scale-transition" max-width="290px" min-width="290px">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-text-field label="Mulai Kelas" readonly v-model="editedItem.start_class" v-on="on"
-                                        v-bind="attrs" clearable :rules="[required]"
-                                        :error-messages="validation.start_class"></v-text-field>
+                                        v-bind="attrs" clearable :error-messages="validation.start_class"></v-text-field>
                                 </template>
                                 <v-time-picker v-model="editedItem.start_class" format="24hr"
                                     @input="fromTimeMenuEdit = false"></v-time-picker>
                             </v-menu>
                             <v-text-field v-model="editedItem.capacity" label="Capasitas Kelas" clearable
-                                :rules="[required]" :error-messages="validation.capacity"></v-text-field>
+                                :error-messages="validation.capacity"></v-text-field>
                             <v-select v-model="editedItem.day_name" :items="day_name" label="Nama Hari" name="day_name"
-                                item-value="name" item-text="name" clearable :rules="[required]"
-                                :error-messages="validation.day_name">
+                                item-value="name" item-text="name" clearable :error-messages="validation.day_name">
                             </v-select>
                         </v-container>
                     </v-card-text>
@@ -233,11 +229,6 @@ export default {
         };
     },
     methods: {
-        //tambahin ini disetiap input biar dicek
-        // clearable :rules="[required]"
-        required(v) {
-            return !!v || 'Field is required'
-        },
 
         getClassDetail() {
             axios.get(Api.BASE_URL + "/class_detail", {

@@ -37,17 +37,17 @@
         <!-- tambah  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogTambah" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureAdd = true">
+                <v-form @submit.prevent="dialogAreUSureAdd = true">
                     <v-card-title>
                         <span class="headine"> Form Promo Cash</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            <v-text-field v-model="promoTemp.min_deposit_cash" label="deposit" clearable :rules="[required]"
+                            <v-text-field v-model="promoTemp.min_deposit_cash" label="deposit" clearable
                                 :error-messages="validation.min_deposit_cash"></v-text-field>
-                            <v-text-field v-model="promoTemp.min_topup_cash" label="topup" clearable :rules="[required]"
+                            <v-text-field v-model="promoTemp.min_topup_cash" label="topup" clearable
                                 :error-messages="validation.min_topup_cash"></v-text-field>
-                            <v-text-field v-model="promoTemp.bonus_cash" label="bonus" clearable :rules="[required]"
+                            <v-text-field v-model="promoTemp.bonus_cash" label="bonus" clearable
                                 :error-messages="validation.bonus_cash"></v-text-field>
                         </v-container>
                     </v-card-text>
@@ -63,17 +63,17 @@
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
-                <v-form v-model="form" @submit.prevent="dialogAreUSureEdit = true">
+                <v-form @submit.prevent="dialogAreUSureEdit = true">
                     <v-card-title>
                         <span class="headine"> Form Promo Cash</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-text-field v-model="editedItem.min_deposit_cash" label="deposit" clearable
-                                :rules="[required]" :error-messages="validation.min_deposit_cash"></v-text-field>
-                            <v-text-field v-model="editedItem.min_topup_cash" label="topup" clearable :rules="[required]"
+                                :error-messages="validation.min_deposit_cash"></v-text-field>
+                            <v-text-field v-model="editedItem.min_topup_cash" label="topup" clearable
                                 :error-messages="validation.min_topup_cash"></v-text-field>
-                            <v-text-field v-model="editedItem.bonus_cash" label="bonus" clearable :rules="[required]"
+                            <v-text-field v-model="editedItem.bonus_cash" label="bonus" clearable
                                 :error-messages="validation.bonus_cash"></v-text-field>
                         </v-container>
                     </v-card-text>
@@ -187,11 +187,7 @@ export default {
         };
     },
     methods: {
-        //tambahin ini disetiap input biar dicek
-        // clearable :rules="[required]"
-        required(v) {
-            return !!v || 'Field is required'
-        },
+
 
         formatPrice(value) {
             let val = (value / 1).toFixed(2).replace('.', ',')
