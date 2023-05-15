@@ -16,6 +16,14 @@
         </v-card>
         <v-card>
             <v-data-table :headers="headers" :items="member" :search="search">
+                <template v-slot:[`item.status_membership`]="{ item }">
+                    <v-chip v-if="item.status_membership == 0" text-color="white" color="red">
+                        Not Active
+                    </v-chip>
+                    <v-chip v-if="item.status_membership == 1" text-color="white" color="green">
+                        Active
+                    </v-chip>
+                </template>
                 <template v-slot:[`item.jumlah_deposit_reguler`]="{ item }">
                     <v-card-text>Rp. {{ formatPrice(item.jumlah_deposit_reguler) }}</v-card-text>
                 </template>
