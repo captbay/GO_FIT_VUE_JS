@@ -74,7 +74,7 @@
         </v-dialog>
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">
@@ -108,12 +108,12 @@ export default {
                 {
                     text: "Hari",
                     sortable: true,
-                    value: "jadwal_umum.day_name",
+                    value: "day_name",
                 },
                 { text: "Tanggal", value: "date" },
                 { text: "Mulai Kelas", value: "jadwal_umum.start_class" },
                 { text: "Nama Kelas", value: "jadwal_umum.class_detail.name" },
-                { text: "Instruktur", value: "jadwal_umum.instruktur.name" },
+                { text: "Nama Instruktur", value: "instruktur.name" },
                 { text: "Status Kelas Jika tidak ada", value: "status" },
                 { text: "Actions", value: "actions", sortable: false },
             ],

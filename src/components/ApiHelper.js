@@ -1,5 +1,5 @@
 // const IP_ADDR = '10.53.4.164'
-const BASE_NONAPI = `http://127.0.0.1:8000`;
+const BASE_NONAPI = `http://192.168.100.175:8000`;
 const BASE_THIS = `https://gofit_ages.netlify.app`;
 const BASE_URL = BASE_NONAPI + "/api";
 

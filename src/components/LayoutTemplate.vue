@@ -91,7 +91,7 @@
         <!-- toast -->
         <!-- <vtoast ref="vtoast" /> -->
         <!-- Snackbar -->
-        <v-snackbar v-model="sb.show" :color="sb.color" timeout="2000" center bottom>
+        <v-snackbar v-model="sb.show" :color="sb.color" timeout="5000" center bottom>
             <v-icon left>{{ sb.icon }}</v-icon>
             {{ sb.message }}
             <template v-slot:action="{ attrs }">
@@ -124,12 +124,13 @@ export default {
             kasirs: [
                 { title: 'Home', icon: 'mdi-home', to: '/' },
                 { title: 'Member', icon: 'mdi-account-multiple-plus', to: '/member' }, //isi reset pass member
-                { title: 'Reset Password', icon: 'mdi-eye', to: '/resetPass' }, //isi reset pass member
+                { title: 'Reset Pass Member', icon: 'mdi-eye', to: '/resetPass' }, //isi reset pass member
+                { title: 'Deaktivasi Member', icon: 'mdi-account-arrow-down', to: '/memberDeaktivasi' }, //isi reset pass member
+                { title: 'Reset Deposit Paket', icon: 'mdi-magnify-minus', to: '/depositPaketDeaktivasi' }, //isi reset pass member
+                { title: 'Reset Telat Instruktur', icon: ' mdi-account-tie-hat', to: '/instrukturLate' },//
                 { title: 'Aktivasi Member', icon: ' mdi-head-plus', to: '/aktivasiMember' },
                 { title: 'Deposit Uang', icon: ' mdi-cash', to: '/depositUang' },
                 { title: 'Deposit Kelas', icon: ' mdi-google-classroom', to: '/depositKelas' },
-                { title: 'List Class', icon: 'mdi-list-status', to: '/nantian' },
-                { title: 'List Gym', icon: 'mdi-list-status', to: '/nantian' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
             managers: [
@@ -138,7 +139,6 @@ export default {
                 { title: 'Jadwal Umum', icon: 'mdi-calendar', to: '/jadwalUmum' }, //
                 { title: 'Jadwal Harian', icon: 'mdi-calendar-alert', to: '/jadwalHarian' },
                 { title: 'Ijin Instruktur', icon: ' mdi-account-tie-voice', to: '/instrukturIzin' },
-                { title: 'Pegawai', icon: ' mdi-account-multiple', to: '/pegawai' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
             sb: {

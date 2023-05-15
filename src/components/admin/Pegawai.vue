@@ -133,7 +133,7 @@
 
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">

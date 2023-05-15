@@ -55,8 +55,13 @@
                                 label="Kasir yang membuat transaksi" name="pegawaiKasir" item-value="id" item-text="name"
                                 clearable :error-messages="validation.id_pegawai">
                             </v-select>
-                            <v-text-field v-model="deposit_package_historyTemp.package_amount" label="jumlah topup paket"
-                                clearable :error-messages="validation.package_amount"></v-text-field>
+                            <v-select v-model="deposit_package_historyTemp.package_amount" :items="promoClass"
+                                label="Pilih Paket yang diinginkan" name="package_amount" item-value="jumlah_sesi"
+                                :item-text="item => `Beli ${item.jumlah_sesi} - Bonus ${item.bonus_sesi} - Durasi ${item.durasi_aktif} bulan`"
+                                clearable :error-messages="validation.package_amount">
+                            </v-select>
+                            <!-- <v-text-field v-model="deposit_package_historyTemp.package_amount" label="jumlah topup paket"
+                                clearable :error-messages="validation.package_amount"></v-text-field> -->
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
@@ -83,7 +88,7 @@
 
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">
@@ -110,6 +115,7 @@ export default {
             member: [],
             pegawaiKasir: [],
             classDetail: [],
+            promoClass: [],
             deposit_package_historyTemp: [],
             title: "",
             headers: [
@@ -201,6 +207,21 @@ export default {
             });
         },
 
+
+        getPromoClass() {
+            axios.get(Api.BASE_URL + "/promo_class", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + $cookies.get("SESSION")
+                }
+            }).then((response) => {
+                this.promoClass = response.data.data;
+                console.log(this.promoClass)
+            }).catch((error) => {
+                console.log(error)
+            });
+        },
+
         getData() {
             axios.get(Api.BASE_URL + "/deposit_package_history", {
                 headers: {
@@ -254,10 +275,10 @@ export default {
                 this.validation.id_pegawai = error.response.data.id_pegawai
                 this.validation.package_amount = error.response.data.package_amount
 
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                this.snackbar.show = true;
+                this.snackbar.color = 'error';
+                this.snackbar.icon = 'mdi-close';
+                this.snackbar.message = error.response.data.message;
             });
         },
 
@@ -265,6 +286,13 @@ export default {
         cetakPdf(id, item) {
             this.indexArray = this.deposit_package_history.indexOf(item);
             this.namePDF = this.deposit_package_history[this.indexArray].no_deposit_package_history;
+
+            this.snackbar.show = true;
+            this.snackbar.color = 'warning';
+            this.snackbar.icon = 'mdi-check';
+            this.snackbar.message = 'Mohon Menunggu Sedang Mencetak :)';
+            this.dialogTambah = false;
+
             axios.get(Api.BASE_URL + `/deposit_package_history/generatePdf/${id}`, {
                 responseType: 'blob',
                 headers: {
@@ -299,6 +327,7 @@ export default {
         this.getMember();
         this.getPegawaiKasir();
         this.getClassDetail();
+        this.getPromoClass();
     }
 };
 </script>

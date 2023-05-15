@@ -79,7 +79,7 @@
 
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">
@@ -242,6 +242,13 @@ export default {
         cetakPdf(id, item) {
             this.indexArray = this.deposit_reguler_history.indexOf(item);
             this.namePDF = this.deposit_reguler_history[this.indexArray].no_deposit_reguler_history;
+
+            this.snackbar.show = true;
+            this.snackbar.color = 'warning';
+            this.snackbar.icon = 'mdi-check';
+            this.snackbar.message = 'Mohon Menunggu Sedang Mencetak :)';
+            this.dialogTambah = false;
+
             axios.get(Api.BASE_URL + `/deposit_reguler_history/generatePdf/${id}`, {
                 responseType: 'blob',
                 headers: {

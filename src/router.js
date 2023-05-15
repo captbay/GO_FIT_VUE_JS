@@ -96,6 +96,15 @@ const router = new VueRouter({
           component: importViewKasir("Member"),
         },
         {
+          path: "/memberDeaktivasi",
+          name: "MemberDeaktivasi",
+          meta: {
+            title: "MemberDeaktivasi",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("MemberDeaktivasi"),
+        },
+        {
           path: "/resetPass",
           name: "ResetPass",
           meta: {
@@ -103,6 +112,15 @@ const router = new VueRouter({
             authRequired: "kasir",
           },
           component: importViewKasir("ResetPass"),
+        },
+        {
+          path: "/instrukturLate",
+          name: "InstrukturLate",
+          meta: {
+            title: "InstrukturLate",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("InstrukturLate"),
         },
         {
           path: "/aktivasiMember",
@@ -130,6 +148,15 @@ const router = new VueRouter({
             authRequired: "kasir",
           },
           component: importViewKasir("DepositKelas"),
+        },
+        {
+          path: "/depositPaketDeaktivasi",
+          name: "DepositPaketDeaktivasi",
+          meta: {
+            title: "DepositPaketDeaktivasi",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("DepositPaketDeaktivasi"),
         },
         //mo
         {

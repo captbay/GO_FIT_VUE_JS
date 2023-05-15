@@ -14,9 +14,34 @@
             </v-card-title>
         </v-card>
         <v-card>
-            <v-data-table :headers="headers" :items="instruktur_izin" :search="search">
+            <v-card-title>Belum Dikonfirmasi</v-card-title>
+            <v-data-table :headers="headers" :items="instruktur_izinNotConfrim" :search="search">
+                <template v-slot:[`item.is_confirm`]="{ item }">
+                    <v-chip v-if="item.is_confirm == 0" text-color="white" color="red">
+                        Not Confirm
+                    </v-chip>
+                    <v-chip v-if="item.is_confirm == 1" text-color="white" color="green">
+                        Confirm
+                    </v-chip>
+                </template>
                 <template v-slot:[`item.action`]="{ item }">
-                    <v-btn small class="mr-2 yellow lighten-3" @click="confirmIzin(item.id, item)">Konfirmasi</v-btn>
+                    <v-btn small class="mr-2 yellow lighten-3" @click="confirmIzin(item.id)">Konfirmasi</v-btn>
+                </template>
+            </v-data-table>
+        </v-card>
+        <v-card>
+            <v-card-title>Sudah Dikonfirmasi</v-card-title>
+            <v-data-table :headers="headers" :items="instruktur_izinAlreadyConfrim" :search="search">
+                <template v-slot:[`item.is_confirm`]="{ item }">
+                    <v-chip v-if="item.is_confirm == 0" text-color="white" color="red">
+                        Not Confirm
+                    </v-chip>
+                    <v-chip v-if="item.is_confirm == 1" text-color="white" color="green">
+                        Confirm
+                    </v-chip>
+                </template>
+                <template v-slot:[`item.action`]>
+                    <v-btn :disabled=true small class="mr-2 yellow lighten-3">Sudah Dikonfirmasi</v-btn>
                 </template>
             </v-data-table>
         </v-card>
@@ -28,7 +53,7 @@
                 <v-card-actions class="mt-4">
                     <v-spacer></v-spacer>
                     <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureAdd = false">CANCEL</v-btn>
-                    <v-btn color="mr-2 red lighten-3" variant="text" @click="saveTambah()">YES</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="updateIzin()">YES</v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -36,7 +61,7 @@
 
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">
@@ -57,10 +82,8 @@ export default {
     data() {
         return {
             search: null,
-            instruktur_izin: [],
-            member: [],
-            pegawaiKasir: [],
-            instruktur_izinTemp: [],
+            instruktur_izinNotConfrim: [],
+            instruktur_izinAlreadyConfrim: [],
             title: "",
             headers: [
                 { text: "Nama Instruktur", sortable: true, value: "instruktur.name" },
@@ -71,11 +94,7 @@ export default {
                 { text: "Action", value: "action", sortable: false },
             ],
             //pop up
-            dialogTambah: false,
-            dialogEdit: false,
-            dialogDelete: false,
             dialogAreUSureAdd: false,
-            dialogAreUSureEdit: false,
 
             //index
             indexArray: null,
@@ -86,77 +105,80 @@ export default {
                 message: ''
             }),
 
-            //date
-            fromDateMenu: false,
-
             //validation
             validation: [],
         };
     },
     methods: {
 
-        getIzin() {
-            axios.get(Api.BASE_URL + "/instruktur_izin", {
+        getIzinNotConfirm() {
+            axios.get(Api.BASE_URL + "/instrukturIzin/notConfirm", {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + $cookies.get("SESSION")
                 }
             }).then((response) => {
-                this.instruktur_izin = response.data.data;
-                console.log(this.instruktur_izin)
+                this.instruktur_izinNotConfrim = response.data.data;
+                console.log(this.instruktur_izinNotConfrim)
             }).catch((error) => {
                 console.log(error)
             });
         },
 
-        confirmIzin(id, item) {
-            this.editedIndex = item
-            this.dialogAreUSureAdd = true
+        getIzinAlreadyConfirm() {
+            axios.get(Api.BASE_URL + "/instrukturIzin/alreadyConfirm", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + $cookies.get("SESSION")
+                }
+            }).then((response) => {
+                this.instruktur_izinAlreadyConfrim = response.data.data;
+                console.log(this.instruktur_izinAlreadyConfrim)
+            }).catch((error) => {
+                console.log(error)
+            });
         },
 
-        saveTambah() {
-            let id_member = this.instruktur_izinTemp.id_member;
-            let id_pegawai = this.instruktur_izinTemp.id_pegawai;
-            axios.post(Api.BASE_URL + "/instruktur_izin", {
-                id_member: id_member,
-                id_pegawai: id_pegawai,
-            }, {
+        confirmIzin(id) {
+            this.editedIndex = id;
+            this.dialogAreUSureAdd = true;
+        },
+
+        updateIzin() {
+            let id = this.editedIndex
+            axios.post(Api.BASE_URL + `/instruktur_izin/confirmIzin/${id}`, {}, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + $cookies.get("SESSION")
                 }
             }).then((response) => {
                 console.log(response)
-                //reset
-                this.instruktur_izinTemp = [];
 
                 this.snackbar.show = true;
                 this.snackbar.color = 'success';
                 this.snackbar.icon = 'mdi-check';
-                this.snackbar.message = 'Berhasil tambah aktivasi';
+                this.snackbar.message = 'Berhasil konfirmasi izin';
                 ///
-                this.dialogTambah = false;
                 this.dialogAreUSureAdd = false
                 //reload
-                this.getIzin();
+                this.getIzinNotConfirm();
+                this.getIzinAlreadyConfirm();
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
                 this.dialogAreUSureAdd = false
 
-                this.validation.id_member = error.response.data.id_member
-                this.validation.id_pegawai = error.response.data.id_pegawai
-
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                this.snackbar.show = true;
+                this.snackbar.color = 'error';
+                this.snackbar.icon = 'mdi-close';
+                this.snackbar.message = error.response.data;
             });
         },
 
     },
     mounted() {
-        this.getIzin();
+        this.getIzinNotConfirm();
+        this.getIzinAlreadyConfirm();
     }
 };
 </script>

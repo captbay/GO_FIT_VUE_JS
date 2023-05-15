@@ -68,7 +68,7 @@
 
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">
@@ -228,6 +228,13 @@ export default {
         cetakPdf(id, item) {
             this.indexArray = this.aktivasi_history.indexOf(item);
             this.namePDF = this.aktivasi_history[this.indexArray].no_aktivasi_history;
+
+            this.snackbar.show = true;
+            this.snackbar.color = 'warning';
+            this.snackbar.icon = 'mdi-check';
+            this.snackbar.message = 'Mohon Menunggu Sedang Mencetak :)';
+            this.dialogTambah = false;
+
             axios.get(Api.BASE_URL + `/aktivasi_history/generatePdf/${id}`, {
                 responseType: 'blob',
                 headers: {
@@ -236,6 +243,7 @@ export default {
                 }
             }).then((response) => {
                 console.log(response.data)
+
                 var fileURL = window.URL.createObjectURL(new Blob([response.data]));
                 var fileLink = document.createElement('a');
                 fileLink.href = fileURL;

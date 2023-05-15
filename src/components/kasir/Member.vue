@@ -31,7 +31,8 @@
                     <v-btn small class="mr-2 blue lighten-3" @click="editItem(item.id, item)">
                         edit
                     </v-btn>
-                    <v-btn small class="mr-2 red lighten-3" @click="deleteItem(item.id)">delete</v-btn>
+                    <!-- <v-btn small class="mr-2 red lighten-3" @click="deleteItem(item.id)">delete</v-btn> -->
+                    <v-btn small class="mr-2 red lighten-3" @click="deaktivasiMember(item.id)">deaktivasi</v-btn>
                 </template>
                 <template v-slot:[`item.cetak`]="{ item }">
                     <v-btn small class="mr-2 yellow lighten-3" @click="cetakPdf(item.id, item)">cetak</v-btn>
@@ -103,10 +104,23 @@
             </v-card>
         </v-dialog>
 
+        <!-- deaktivasi -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogDeaktivasi" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to delete this item?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogDeaktivasi = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="deaktivasiMemberConfirm">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         <!-- hapus -->
         <v-dialog transition="dialog-top-transition" v-model="dialogDelete" max-width="500px">
             <v-card>
-                <v-card-title class="text-h5 justify-center">Are you sure you want to delete this item?</v-card-title>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to deactive this member?</v-card-title>
                 <v-card-actions class="mt-4">
                     <v-spacer></v-spacer>
                     <v-btn color="blue-darken-1" variant="text" @click="dialogDelete = false">CANCEL</v-btn>
@@ -144,7 +158,7 @@
 
 
         <!-- snacbkar -->
-        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="2000" center bottom>
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000" center bottom>
             <v-icon left>{{ snackbar.icon }}</v-icon>
             {{ snackbar.message }}
             <template v-slot:action="{ attrs }">
@@ -205,6 +219,7 @@ export default {
             dialogDelete: false,
             dialogAreUSureAdd: false,
             dialogAreUSureEdit: false,
+            dialogDeaktivasi: false,
 
             //index
             editedIndex: null,
@@ -302,6 +317,39 @@ export default {
             });
         },
 
+        deaktivasiMember(item) {
+            this.editedIndex = item
+            this.dialogDeaktivasi = true
+        },
+
+        deaktivasiMemberConfirm() {
+            let id = this.editedIndex;
+            axios.post(Api.BASE_URL + `/deaktivasiMember/${id}`, {}, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + $cookies.get("SESSION")
+                }
+            }).then((response) => {
+                console.log(response)
+                this.snackbar.show = true;
+                this.snackbar.color = 'success';
+                this.snackbar.icon = 'mdi-check';
+                this.snackbar.message = 'Berhasil deaktivasi';
+                //
+                this.dialogDeaktivasi = false
+                //reload
+                this.getMember();
+                this.validation = [];
+            }).catch((error) => {
+                console.log(error)
+                this.snackbar.show = true;
+                this.snackbar.color = 'error';
+                this.snackbar.icon = 'mdi-close';
+                this.snackbar.message = error.response.data.message;
+            });
+
+        },
+
         deleteItem(item) {
             this.editedIndex = item
             this.dialogDelete = true
@@ -386,7 +434,14 @@ export default {
         //cetak pdf
         cetakPdf(id, item) {
             this.indexArray = this.member.indexOf(item);
-            this.namePDF = this.member[this.indexArray].name
+            this.namePDF = this.member[this.indexArray].name;
+
+            this.snackbar.show = true;
+            this.snackbar.color = 'warning';
+            this.snackbar.icon = 'mdi-check';
+            this.snackbar.message = 'Mohon Menunggu Sedang Mencetak :)';
+            this.dialogTambah = false;
+
             axios.get(Api.BASE_URL + `/member/generatePdf/${id}`, {
                 responseType: 'blob',
                 headers: {
