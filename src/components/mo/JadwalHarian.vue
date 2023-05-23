@@ -112,6 +112,7 @@ export default {
                 },
                 { text: "Tanggal", value: "date" },
                 { text: "Mulai Kelas", value: "jadwal_umum.start_class" },
+                { text: "Selesai Kelas", value: "jadwal_umum.end_class" },
                 { text: "Nama Kelas", value: "jadwal_umum.class_detail.name" },
                 { text: "Nama Instruktur", value: "instruktur.name" },
                 { text: "Status Kelas Jika tidak ada", value: "status" },

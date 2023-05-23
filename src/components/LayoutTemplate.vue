@@ -132,7 +132,7 @@ export default {
                 { title: 'Deposit Uang', icon: ' mdi-cash', to: '/depositUang' },
                 { title: 'Deposit Kelas', icon: ' mdi-google-classroom', to: '/depositKelas' },
                 { title: 'Presensi GYM', icon: ' mdi-trophy-variant', to: '/presensiGym' },
-                { title: 'Presensi Kelas Reguler', icon: ' mdi-google-classroom', to: '/presensiKelasRegulerAndPaket' },
+                { title: 'Presensi Kelas', icon: ' mdi-google-classroom', to: '/presensiKelasRegulerAndPaket' },
                 // { title: 'Presensi Kelas Paket', icon: ' mdi-google-classroom', to: '/presensiKelasPaket' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
