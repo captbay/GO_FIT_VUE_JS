@@ -268,8 +268,6 @@ export default {
             this.editedItem.number_phone = this.member[this.indexArray].number_phone;
             this.editedItem.born_date = this.member[this.indexArray].born_date;
             this.editedItem.gender = this.member[this.indexArray].gender;
-            console.log(this.editedItem);
-            console.log(this.editedIndex);
             this.dialogEdit = true;
         },
 

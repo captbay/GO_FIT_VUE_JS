@@ -158,6 +158,24 @@ const router = new VueRouter({
           },
           component: importViewKasir("DepositPaketDeaktivasi"),
         },
+        {
+          path: "/presensiGym",
+          name: "PresensiGym",
+          meta: {
+            title: "PresensiGym",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("PresensiGym"),
+        },
+        {
+          path: "/presensiKelasRegulerAndPaket",
+          name: "PresensiKelasRegulerAndPaket",
+          meta: {
+            title: "PresensiKelasRegulerAndPaket",
+            authRequired: "kasir",
+          },
+          component: importViewKasir("PresensiKelasRegulerAndPaket"),
+        },
         //mo
         {
           path: "/class",

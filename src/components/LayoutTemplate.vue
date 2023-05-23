@@ -1,8 +1,8 @@
 <template>
     <v-container fluid class="body">
         <!-- side bar Kiri -->
-        <v-navigation-drawer app v-model="drawer" width="20%" max-width="300px" min-width="200px" color="#23252E"
-            class="sideNav" hide-overlay>
+        <v-navigation-drawer app v-model="drawer" width="300px" min-width="200px" color="#23252E" class="sideNav"
+            hide-overlay>
             <v-list-item>
                 <v-list-item-content>
                     <v-img :src="require('@/assets/Logo.png')" contain max-height="160"></v-img>
@@ -112,7 +112,7 @@ export default {
     name: 'LayoutTemplate',
     data() {
         return {
-            drawer: true,
+            drawer: false,
             menus: [
                 { title: 'Home', icon: 'mdi-home', to: '/' }, ///
                 { title: 'Promo Cash', icon: ' mdi-sale', to: '/promocash' }, //
@@ -131,6 +131,9 @@ export default {
                 { title: 'Aktivasi Member', icon: ' mdi-head-plus', to: '/aktivasiMember' },
                 { title: 'Deposit Uang', icon: ' mdi-cash', to: '/depositUang' },
                 { title: 'Deposit Kelas', icon: ' mdi-google-classroom', to: '/depositKelas' },
+                { title: 'Presensi GYM', icon: ' mdi-trophy-variant', to: '/presensiGym' },
+                { title: 'Presensi Kelas Reguler', icon: ' mdi-google-classroom', to: '/presensiKelasRegulerAndPaket' },
+                // { title: 'Presensi Kelas Paket', icon: ' mdi-google-classroom', to: '/presensiKelasPaket' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
             managers: [
@@ -172,6 +175,7 @@ export default {
             })
                 .then((response) => {
                     $cookies.remove("SESSION");
+                    $cookies.remove("ROLE");
                     this.$router.push('/login');
                 }).catch((error) => {
                     this.sb.icon = "mdi-alert";
