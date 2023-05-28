@@ -60,7 +60,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="red lighten-3" text @click="dialogTambah = false"> CANCEL</v-btn>
-                        <v-btn color="blue darken-1" text @click="sumbit"> SAVE</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>
@@ -86,7 +86,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="red lighten-3" text @click="dialogEdit = false"> CANCEL</v-btn>
-                        <v-btn color="blue darken-1" text @click="submit"> SAVE</v-btn>
+                        <v-btn color="blue darken-1" text type="submit"> SAVE</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card>

@@ -47,7 +47,7 @@
                 </v-container>
                 <v-divider color="#FF9045"></v-divider>
                 <v-container>
-                    <v-list-item @click="Logout()" class="my-5 sidebar-menu-item">
+                    <v-list-item @click="dialogAreUSureLogout = true" class="my-5 sidebar-menu-item">
                         <v-list-item-icon>
                             <v-icon>mdi-logout</v-icon>
                         </v-list-item-icon>
@@ -88,6 +88,18 @@
             <v-divider></v-divider>
         </v-navigation-drawer> -->
 
+        <!-- are you sure logout -->
+        <v-dialog transition="dialog-top-transition" v-model="dialogAreUSureLogout" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5 justify-center">Are you sure you want to Logout?</v-card-title>
+                <v-card-actions class="mt-4">
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue-darken-1" variant="text" @click="dialogAreUSureLogout = false">CANCEL</v-btn>
+                    <v-btn color="mr-2 red lighten-3" variant="text" @click="Logout()">YES</v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <!-- toast -->
         <!-- <vtoast ref="vtoast" /> -->
         <!-- Snackbar -->
@@ -113,6 +125,8 @@ export default {
     data() {
         return {
             drawer: false,
+            dialogAreUSureLogout: false,
+
             menus: [
                 { title: 'Home', icon: 'mdi-home', to: '/' }, ///
                 { title: 'Promo Cash', icon: ' mdi-sale', to: '/promocash' }, //
@@ -142,6 +156,10 @@ export default {
                 { title: 'Jadwal Umum', icon: 'mdi-calendar', to: '/jadwalUmum' }, //
                 { title: 'Jadwal Harian', icon: 'mdi-calendar-alert', to: '/jadwalHarian' },
                 { title: 'Ijin Instruktur', icon: ' mdi-account-tie-voice', to: '/instrukturIzin' },
+                { title: 'Laporan Pendapatan', icon: ' mdi-cash', to: '/laporanPendapatan' },
+                { title: 'Laporan Kelas', icon: ' mdi-book-variant', to: '/laporanKelas' },
+                { title: 'Laporan Gym', icon: ' mdi-weight-kilogram', to: '/laporanGym' },
+                { title: 'Laporan Instruktur', icon: ' mdi-account-alert-outline', to: '/laporanInstruktur' },
                 { title: 'Profil', icon: ' mdi-account', to: '/profil' }, //
             ],
             sb: {

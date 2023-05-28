@@ -226,7 +226,7 @@ export default {
                 snackbar.show = true;
                 snackbar.color = 'error';
                 snackbar.icon = 'mdi-close';
-                snackbar.message = error.response.data.message;
+                snackbar.message = error.response.data;
             }).finally(() => {
                 loading2.value = false;
             });
@@ -259,7 +259,7 @@ export default {
                 snackbar.show = true;
                 snackbar.color = 'error';
                 snackbar.icon = 'mdi-close';
-                snackbar.message = 'Gagal Update Password User';
+                snackbar.message = 'Gagal Update Password User, Password Lama Salah';
             }).finally(() => {
                 loading2.value = false;
             });
@@ -308,7 +308,7 @@ export default {
             // commentDialog,
             UserLog,
             loadingProfile,
-            loading2
+            loading2,
         };
     },
     watch: {

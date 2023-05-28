@@ -1,4 +1,5 @@
 const BASE_NONAPI = `http://192.168.100.175:8000`; //kontrakan ages
+// const BASE_NONAPI = `http://192.168.1.89:8000`; //svragakopi
 // const BASE_NONAPI = `http://10.53.3.151:8000`; //kampus
 
 const BASE_THIS = `https://gofit_ages.netlify.app`;

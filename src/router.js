@@ -213,6 +213,42 @@ const router = new VueRouter({
           },
           component: importViewMo("InstrukturIzin"),
         },
+        {
+          path: "/laporanPendapatan",
+          name: "LaporanPendapatan",
+          meta: {
+            title: "LaporanPendapatan",
+            authRequired: "mo",
+          },
+          component: importViewMo("LaporanPendapatan"),
+        },
+        {
+          path: "/laporanKelas",
+          name: "laporanKelas",
+          meta: {
+            title: "laporanKelas",
+            authRequired: "mo",
+          },
+          component: importViewMo("laporanKelas"),
+        },
+        {
+          path: "/laporanGym",
+          name: "laporanGym",
+          meta: {
+            title: "laporanGym",
+            authRequired: "mo",
+          },
+          component: importViewMo("laporanGym"),
+        },
+        {
+          path: "/laporanInstruktur",
+          name: "laporanInstruktur",
+          meta: {
+            title: "laporanInstruktur",
+            authRequired: "mo",
+          },
+          component: importViewMo("laporanInstruktur"),
+        },
       ],
     },
     {
@@ -232,7 +268,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
-  console.log("hello");
   //check page is protected or not
   console.log("to.meta.authRequired", to.meta.authRequired);
   if (to.meta.authRequired === "admin") {
