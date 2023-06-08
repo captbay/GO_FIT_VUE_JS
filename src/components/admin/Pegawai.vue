@@ -284,10 +284,12 @@ export default {
                 this.validation.name = error.response.data.name
                 this.validation.address = error.response.data.address
                 this.validation.number_phone = error.response.data.number_phone
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         },
 
@@ -316,10 +318,12 @@ export default {
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
 
         },
@@ -369,10 +373,12 @@ export default {
                 this.validation.gender = error.response.data.gender
                 this.validation.role = error.response.data.role
 
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         }
 

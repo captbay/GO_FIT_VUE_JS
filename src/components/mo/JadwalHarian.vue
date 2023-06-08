@@ -24,6 +24,94 @@
             </v-data-table>
         </v-card>
 
+        <v-card>
+            <div style="padding: 16px 16px 0px 16px;">
+                <v-list-item style="padding: 16px;">
+                    <v-list-item-content>
+                        <v-list-item-title class="headline">Morning Classes</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <table style="width:100%" class="table">
+                    <template v-for="day in days">
+                        <tr :key="day.name">
+                            <template v-if="getFilteredJadwalMorning(day.filter).length != 0">
+                                <th class="border">{{ day.name }}
+                                    <br />
+                                    <span style="font-weight: normal;">
+                                        {{ formatDate(getFilteredJadwalMorning(day.filter)[0].date) }}
+                                    </span>
+                                </th>
+                                <template v-for="item in getFilteredJadwalMorning(day.filter)">
+                                    <td class="borderData" :key="item.id">
+                                        {{ convertTimeFormat(item.start_class) }} <br />
+                                        <template
+                                            v-if="item.jadwal_umum.class_detail.name === 'Bungee' || item.jadwal_umum.class_detail.name === 'Trampoline Workout'">
+                                            {{ item.jadwal_umum.class_detail.name }} <span
+                                                style="color: red;">*</span><br />
+                                        </template>
+                                        <template v-else>
+                                            {{ item.jadwal_umum.class_detail.name }}<br />
+                                        </template>
+                                        {{ item.instruktur.name }}
+                                        <template v-if="item.status != ''">
+                                            <br /><span style="color: red;">( {{ item.status }} )</span><br />
+                                        </template>
+                                    </td>
+                                </template>
+                            </template>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+
+            <div style="padding: 16px;">
+                <v-list-item style="padding: 16px;">
+                    <v-list-item-content>
+                        <v-list-item-title class="headline">Evening Classes</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <table style="width:100%" class="table">
+                    <template v-for="day in days">
+                        <tr :key="day.name">
+                            <template v-if="getFilteredJadwalEvening(day.filter).length != 0">
+                                <th class="border">{{ day.name }}
+                                    <br />
+                                    <span style="font-weight: normal;">
+                                        {{ formatDate(getFilteredJadwalEvening(day.filter)[0].date) }}
+                                    </span>
+                                </th>
+                                <template v-for="item in getFilteredJadwalEvening(day.filter)">
+                                    <td class="borderData" :key="item.id">
+                                        {{ convertTimeFormat(item.start_class) }} <br />
+                                        <template
+                                            v-if="item.jadwal_umum.class_detail.name === 'Bungee' || item.jadwal_umum.class_detail.name === 'Trampoline Workout'">
+                                            {{ item.jadwal_umum.class_detail.name }} <span
+                                                style="color: red;">*</span><br />
+                                        </template>
+                                        <template v-else>
+                                            {{ item.jadwal_umum.class_detail.name }}<br />
+                                        </template>
+                                        {{ item.instruktur.name }}
+                                        <template v-if="item.status != ''">
+                                            <br /><span style="color: red;">( {{ item.status }} )</span><br />
+                                        </template>
+                                    </td>
+                                </template>
+                            </template>
+                        </tr>
+                    </template>
+                </table>
+                <v-list-item style="padding: 16px;">
+                    <v-list-item-content>
+                        <v-list-item-title>All classes limited to 10 members</v-list-item-title>
+                        <v-list-item-title>Price: IDR 150K</v-list-item-title>
+                        <v-list-item-title>(<span style="color: red;">*</span>) : IDR
+                            200K</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </div>
+        </v-card>
+
         <!-- edit  -->
         <v-dialog transition="dialog-top-transition" v-model="dialogEdit" persistent max-width="600px">
             <v-card>
@@ -85,6 +173,33 @@
         </v-snackbar>
     </v-main>
 </template>
+
+<style>
+.table {
+    table-layout: fixed;
+    border: 1px solid black;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.border {
+    width: 100px;
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+    color: white;
+    background-color: black;
+}
+
+.borderData {
+    border: 1px solid black;
+    text-align: center;
+    color: black;
+    background-color: white;
+    padding: 8px;
+}
+</style>
+
 <script>
 import { reactive } from "vue";
 import * as Api from "../ApiHelper";
@@ -111,8 +226,8 @@ export default {
                     value: "day_name",
                 },
                 { text: "Tanggal", value: "date" },
-                { text: "Mulai Kelas", value: "jadwal_umum.start_class" },
-                { text: "Selesai Kelas", value: "jadwal_umum.end_class" },
+                { text: "Mulai Kelas", value: "start_class" },
+                { text: "Selesai Kelas", value: "end_class" },
                 { text: "Nama Kelas", value: "jadwal_umum.class_detail.name" },
                 { text: "Nama Instruktur", value: "instruktur.name" },
                 { text: "Status Kelas Jika tidak ada", value: "status" },
@@ -135,9 +250,54 @@ export default {
 
             //validation
             validation: [],
+
+            days: [
+                { name: 'Mon', filter: 'Monday' },
+                { name: 'Tue', filter: 'Tuesday' },
+                { name: 'Wed', filter: 'Wednesday' },
+                { name: 'Thu', filter: 'Thursday' },
+                { name: 'Fri', filter: 'Friday' },
+                { name: 'Sat', filter: 'Saturday' },
+                { name: 'Sun', filter: 'Sunday' }
+            ],
         };
     },
     methods: {
+
+        formatDate(dateString) {
+            const options = { month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', options);
+        },
+
+        getFilteredJadwalMorning(day) {
+            return this.jadwal.filter(item => {
+                return item.day_name === day && item.start_class < '17:00:00';
+            });
+        },
+
+        getFilteredJadwalEvening(day) {
+            return this.jadwal.filter(item => {
+                return item.day_name === day && item.start_class >= '17:00:00';
+            });
+        },
+
+        convertTimeFormat(time) {
+            const [hours, minutes] = time.split(':');
+            let convertedHours = parseInt(hours);
+            let meridiem = 'AM';
+
+            if (convertedHours === 0) {
+                convertedHours = 12;
+            } else if (convertedHours >= 12) {
+                meridiem = 'PM';
+                if (convertedHours > 12) {
+                    convertedHours -= 12;
+                }
+            }
+
+            return `${convertedHours}:${minutes} ${meridiem}`;
+        },
 
         getJadwal() {
             axios.get(Api.BASE_URL + "/class_running", {
@@ -190,10 +350,12 @@ export default {
                 this.dialogAreUSureEdit = false
 
                 this.validation.status = error.response.data.status
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         },
 
@@ -223,10 +385,12 @@ export default {
                 console.log(error)
                 this.dialogAreUSureAdd = false
 
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         }
 

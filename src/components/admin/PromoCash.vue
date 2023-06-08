@@ -187,8 +187,6 @@ export default {
         };
     },
     methods: {
-
-
         formatPrice(value) {
             let val = (value / 1).toFixed(2).replace('.', ',')
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -254,10 +252,12 @@ export default {
                 this.validation.min_topup_cash = error.response.data.min_topup_cash
                 this.validation.bonus_cash = error.response.data.bonus_cash
 
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         },
 
@@ -286,10 +286,12 @@ export default {
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
 
         },
@@ -329,10 +331,12 @@ export default {
                 this.validation.min_topup_cash = error.response.data.min_topup_cash
                 this.validation.bonus_cash = error.response.data.bonus_cash
 
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         }
 

@@ -237,10 +237,12 @@ export default {
                 this.validation.name = error.response.data.name;
                 this.validation.price = error.response.data.price;
 
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         },
 
@@ -269,10 +271,12 @@ export default {
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
 
         },
@@ -309,10 +313,12 @@ export default {
 
                 this.validation.name = error.response.data.name;
                 this.validation.price = error.response.data.price;
-                // this.snackbar.show = true;
-                // this.snackbar.color = 'error';
-                // this.snackbar.icon = 'mdi-close';
-                // this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         }
 

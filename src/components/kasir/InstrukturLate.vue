@@ -120,10 +120,12 @@ export default {
                 console.log(error)
                 this.dialogAreUSureAdd = false
 
-                this.snackbar.show = true;
-                this.snackbar.color = 'error';
-                this.snackbar.icon = 'mdi-close';
-                this.snackbar.message = error.response.data.message;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         }
 

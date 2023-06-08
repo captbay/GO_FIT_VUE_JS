@@ -172,6 +172,12 @@ export default {
                 this.snackbar.color = 'error';
                 this.snackbar.icon = 'mdi-close';
                 this.snackbar.message = error.response.data;
+                if (error.response.data.message != null) {
+                    this.snackbar.show = true;
+                    this.snackbar.color = 'error';
+                    this.snackbar.icon = 'mdi-close';
+                    this.snackbar.message = error.response.data.message;
+                }
             });
         },
 
