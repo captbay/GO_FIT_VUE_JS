@@ -170,6 +170,7 @@ export default {
                 this.dialogAreUSureEdit = false
                 //reload
                 this.getMember();
+                this.memberTemp.passwordNew = '';
                 this.validation = [];
             }).catch((error) => {
                 console.log(error)
