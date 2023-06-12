@@ -89,6 +89,8 @@ export default {
                 { text: "Nama Instruktur", sortable: true, value: "instruktur.name" },
                 { text: "Nama Instruktur Pengganti", value: "instruktur_pengganti.name" },
                 { text: "Nama Kelas Yang Diizin", value: "class_running.jadwal_umum.class_detail.name" },
+                { text: "Hari Kelas", value: "class_running.day_name" },
+                { text: "Jam Kelas Mulai", value: "class_running.start_class" },
                 { text: "Alasan", value: "alasan" },
                 { text: "Konfirmasi", value: "is_confirm" },
                 { text: "Action", value: "action", sortable: false },
