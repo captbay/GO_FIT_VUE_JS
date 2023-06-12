@@ -80,9 +80,15 @@
                 <!--  -->
                 <v-card-text>
                     <v-container>
-                        <v-text-field v-model="tempUserPass.passwordOld" label="Password Lama" outlined></v-text-field>
+                        <v-text-field v-model="tempUserPass.passwordOld" label="Password Lama" prepend-inner-icon="mdi-lock"
+                            color="blue" outlined :append-icon="showPasswordLama ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="showPasswordLama ? 'text' : 'password'"
+                            @click:append="showPasswordLama = !showPasswordLama"></v-text-field>
 
-                        <v-text-field v-model="tempUserPass.passwordNew" label="Password Baru" outlined></v-text-field>
+                        <v-text-field v-model="tempUserPass.passwordNew" label="Password Baru" prepend-inner-icon="mdi-lock"
+                            color="blue" outlined :append-icon="showPasswordBaru ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="showPasswordBaru ? 'text' : 'password'"
+                            @click:append="showPasswordBaru = !showPasswordBaru"></v-text-field>
 
                         <!-- <v-menu v-model="fromDateMenu" :close-on-content-click="false" nudge-bottom="64"
                             transition="scale-transition" max-width="290px" min-width="290px">
@@ -133,7 +139,10 @@ export default {
 
         // let dialogPreview = ref(false);
         // let editPostDialog = ref(false);
-        // let commentDialog = ref(false);
+        // let commentDialog = ref(fa  lse);
+
+        const showPasswordLama = ref(false);
+        const showPasswordBaru = ref(false);
 
         const User = ref({});
         const UserLog = ref({});
@@ -253,6 +262,8 @@ export default {
                 snackbar.color = 'success';
                 snackbar.icon = 'mdi-check';
                 snackbar.message = 'Berhasil Update Password User';
+                tempUserPass.value.passwordOld = '';
+                tempUserPass.value.passwordNew = '';
                 dialogUpdatePass.value = false;
             }).catch((error) => {
                 console.log(error)
@@ -309,6 +320,8 @@ export default {
             UserLog,
             loadingProfile,
             loading2,
+            showPasswordLama,
+            showPasswordBaru,
         };
     },
     watch: {
