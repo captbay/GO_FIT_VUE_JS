@@ -107,8 +107,8 @@ export default {
             //format tahun now
             tahunDB: [],
             bulanDB: [],
-            tahunDipilih: new Date().getFullYear(),
-            bulanDipilih: new Date().getMonth() + 1,
+            tahunDipilih: new Date().getFullYear().toString(),
+            bulanDipilih: (new Date().getMonth() + 1).toString(),
 
             //total pendapatan per tahun
             totalMember: null,
