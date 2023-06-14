@@ -2,7 +2,7 @@
 
 ## See the final WEB
 ```
-https://gofit-200710994.netlify.app/login
+https://gofit-200710994.netlify.app
 ```
 
 ## Project setup
