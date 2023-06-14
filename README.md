@@ -1,4 +1,9 @@
-# vuefire-2022
+# GOFIT (A Simple Gym ERP Website)
+
+## See the final WEB
+```
+https://gofit-200710994.netlify.app/login
+```
 
 ## Project setup
 ```
